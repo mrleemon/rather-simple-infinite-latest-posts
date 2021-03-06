@@ -6,7 +6,7 @@ Description: A really simple infinite latest posts widget.
 Version: 1.0
 Author: Oscar Ciutat
 Author URI: http://oscarciutat.com/code/
-Text Domain: rsilp
+Text Domain: rather-simple-infinite-latest-posts
 License: GPLv2 or later
 
   This program is free software; you can redistribute it and/or modify
@@ -31,12 +31,13 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 	 * @since 2.8.0
 	 */
 	public function __construct() {
+        load_plugin_textdomain( 'rather-simple-infinite-latest-posts', '', dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 		$widget_ops = array(
 			'classname'                   => 'widget_infinite_latest_posts',
 			'description'                 => __( 'Your site&#8217;s most recent Posts.' ),
 			'customize_selective_refresh' => true,
 		);
-		parent::__construct( 'infinite-latest-posts', __( 'Infinite Latest Posts', 'rsilp' ), $widget_ops );
+		parent::__construct( 'infinite-latest-posts', __( 'Infinite Latest Posts', 'rather-simple-infinite-latest-posts' ), $widget_ops );
 		$this->alt_option_name = 'widget_infinite_latest_posts';
 	}
 
@@ -54,7 +55,7 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 			$args['widget_id'] = $this->id;
 		}
 
-		$default_title = __( 'Infinite Latest Posts', 'rsilp' );
+		$default_title = __( 'Infinite Latest Posts', 'rather-simple-infinite-latest-posts' );
 		$title         = ( ! empty( $instance['title'] ) ) ? $instance['title'] : $default_title;
 
 		/** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
