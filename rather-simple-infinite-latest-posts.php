@@ -39,7 +39,54 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 		);
 		parent::__construct( 'infinite-latest-posts', __( 'Infinite Latest Posts', 'rather-simple-infinite-latest-posts' ), $widget_ops );
 		$this->alt_option_name = 'widget_infinite_latest_posts';
+        
+        add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+        add_action( 'wp_ajax_my_load_recent', array( $this, 'my_load_recent_posts' ) );
+        add_action( 'wp_ajax_nopriv_my_load_recent', array( $this, 'my_load_recent_posts' ) );
+    
 	}
+
+    /**
+	 * Enqueue scripts and styles
+	 *
+	 */
+    function enqueue_scripts() {
+        // Load scripts
+        //wp_enqueue_script( 'infinite-scroll', plugins_url( '/assets/js/infinite-scroll.pkgd.min.js', __FILE__ ), array( 'jquery' ), false, true );
+        wp_enqueue_script( 'rsilp-script', plugins_url( '/assets/js/frontend.js', __FILE__ ), array( 'jquery' /*, 'infinite-scroll'*/ ), false, true );
+        wp_localize_script( 'rsilp-script', 'rsilp_params', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+    }
+
+
+    function my_load_recent_posts() {
+        $offset = $_POST['offset'];
+        $args = array(
+            'posts_per_page'      => 5,
+            'no_found_rows'       => true,
+            'post_status'         => 'publish',
+            'ignore_sticky_posts' => true,
+            'offset'              => $offset,
+        );
+        query_posts( $args ); /* [1] */
+
+        /* Header wrap output */
+        if ( have_posts() ) :
+            while ( have_posts() ) :
+                the_post();
+            ?>
+                <h2><?php the_title(); ?></h2>
+                <?php the_content(); ?>
+            <?php
+            endwhile;
+        else :
+            /* Output for if there are no posts to get */
+        endif;
+        /* Footer wrap output */
+
+        wp_reset_query();
+
+	    wp_die();
+    }
 
 	/**
 	 * Outputs the content for the current Recent Posts widget instance.
@@ -68,27 +115,12 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 		$show_date = isset( $instance['show_date'] ) ? $instance['show_date'] : false;
 
 		$r = new WP_Query(
-			/**
-			 * Filters the arguments for the Recent Posts widget.
-			 *
-			 * @since 3.4.0
-			 * @since 4.9.0 Added the `$instance` parameter.
-			 *
-			 * @see WP_Query::get_posts()
-			 *
-			 * @param array $args     An array of arguments used to retrieve the recent posts.
-			 * @param array $instance Array of settings for the current widget.
-			 */
-			apply_filters(
-				'widget_posts_args',
-				array(
-					'posts_per_page'      => $number,
-					'no_found_rows'       => true,
-					'post_status'         => 'publish',
-					'ignore_sticky_posts' => true,
-				),
-				$instance
-			)
+            array(
+                'posts_per_page'      => $number,
+                'no_found_rows'       => true,
+                'post_status'         => 'publish',
+                'ignore_sticky_posts' => true
+            )
 		);
 
 		if ( ! $r->have_posts() ) {
@@ -128,10 +160,11 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 				}
 				?>
 				<li>
-					<a href="<?php the_permalink( $recent_post->ID ); ?>"<?php echo $aria_current; ?>><?php echo $title; ?></a>
+					<h2><?php echo $title; ?></h2>
 					<?php if ( $show_date ) : ?>
 						<span class="post-date"><?php echo get_the_date( '', $recent_post->ID ); ?></span>
 					<?php endif; ?>
+                    <div><?php echo $recent_post->post_content; ?></div>
 				</li>
 			<?php endforeach; ?>
 		</ul>
@@ -140,7 +173,14 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 		if ( 'html5' === $format ) {
 			echo '</nav>';
 		}
+        ?>
 
+        <div class="lala">
+        </div>
+
+        <input type="button" class="load-more" value="<?php _e( 'Load More', 'rather-simple-infinite-latest-posts' ); ?>" data-offset="5" />
+
+        <?php
 		echo $args['after_widget'];
 	}
 
