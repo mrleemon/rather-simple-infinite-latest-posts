@@ -76,7 +76,7 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
             ?>
                 <article id="post-<?php the_ID(); ?>" <?php post_class( '', get_the_ID() ); ?>>
                 <header class="entry-header">
-                    <h2><?php the_title(); ?></h2>
+                    <h2 class="entry-title"><?php the_title(); ?></h2>
                 </header>
                 <div class="entry-content">
                     <?php the_content(); ?>
@@ -156,7 +156,7 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
             ?>
             <article id="post-<?php echo $recent_post->ID; ?>" <?php post_class( '', $recent_post->ID ); ?>>
                 <header class="entry-header">
-                    <h2><?php echo $title; ?></h2>
+                    <h2 class="entry-title"><?php echo $title; ?></h2>
                     <?php if ( $show_date ) : ?>
                     <span class="post-date"><?php echo get_the_date( '', $recent_post->ID ); ?></span>
                 <?php endif; ?>
