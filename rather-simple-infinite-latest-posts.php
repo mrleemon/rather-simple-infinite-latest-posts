@@ -169,7 +169,7 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 
         </div>
 
-        <input type="button" class="load-more" value="<?php _e( 'Load More', 'rather-simple-infinite-latest-posts' ); ?>" data-offset="5" />
+        <input type="button" class="load-more" value="<?php _e( 'Load More', 'rather-simple-infinite-latest-posts' ); ?>" data-offset="<?php echo esc_attr( $number ); ?>" />
 
         <?php
 		echo $args['after_widget'];
