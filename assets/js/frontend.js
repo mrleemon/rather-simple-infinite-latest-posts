@@ -2,14 +2,6 @@
 
 	$( function() {
 		
-		/*$( '.blog .site-main .posts' ).infiniteScroll({
-			path: 'nav.navigation a.next',
-			append: '.post',
-			hideNav: '.pagination',
-			prefill: true,
-			history: false,
-		});*/
-
         $( '.widget_infinite_latest_posts .load-more' ).on( 'click',  function( e ) {
             e.preventDefault();
             $this = $( this );
@@ -22,7 +14,7 @@
                     },
                     success: function( result ) {
                         /* handling of the output returned by PHP function */
-                        link = $( '.widget_infinite_latest_posts .lala' ).append( result );
+                        link = $( '.widget_infinite_latest_posts .infinite-posts' ).append( result );
                         $this.data( 'offset', $this.data( 'offset' ) + 5 );
                     },
                     error: function() {

@@ -74,8 +74,14 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
             while ( have_posts() ) :
                 the_post();
             ?>
-                <h2><?php the_title(); ?></h2>
-                <?php the_content(); ?>
+                <article id="post-<?php the_ID(); ?>" <?php post_class( '', get_the_ID() ); ?>>
+                <header class="entry-header">
+                    <h2><?php the_title(); ?></h2>
+                </header>
+                <div class="entry-content">
+                    <?php the_content(); ?>
+                </div>
+                </article>
             <?php
             endwhile;
         else :
@@ -134,48 +140,33 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 		if ( $title ) {
 			echo $args['before_title'] . $title . $args['after_title'];
 		}
-
-		$format = current_theme_supports( 'html5', 'navigation-widgets' ) ? 'html5' : 'xhtml';
-
-		/** This filter is documented in wp-includes/widgets/class-wp-nav-menu-widget.php */
-		$format = apply_filters( 'navigation_widgets_format', $format );
-
-		if ( 'html5' === $format ) {
-			// The title may be filtered: Strip out HTML and make sure the aria-label is never empty.
-			$title      = trim( strip_tags( $title ) );
-			$aria_label = $title ? $title : $default_title;
-			echo '<nav role="navigation" aria-label="' . esc_attr( $aria_label ) . '">';
-		}
 		?>
 
-		<ul>
-			<?php foreach ( $r->posts as $recent_post ) : ?>
-				<?php
-				$post_title   = get_the_title( $recent_post->ID );
-				$title        = ( ! empty( $post_title ) ) ? $post_title : __( '(no title)' );
-				$aria_current = '';
+        <div class="infinite-posts">
 
-				if ( get_queried_object_id() === $recent_post->ID ) {
-					$aria_current = ' aria-current="page"';
-				}
-				?>
-				<li>
-					<h2><?php echo $title; ?></h2>
-					<?php if ( $show_date ) : ?>
-						<span class="post-date"><?php echo get_the_date( '', $recent_post->ID ); ?></span>
-					<?php endif; ?>
-                    <div><?php echo $recent_post->post_content; ?></div>
-				</li>
-			<?php endforeach; ?>
-		</ul>
+        <?php foreach ( $r->posts as $recent_post ) : ?>
+            <?php
+            $post_title   = get_the_title( $recent_post->ID );
+            $title        = ( ! empty( $post_title ) ) ? $post_title : __( '(no title)' );
+            $aria_current = '';
 
-		<?php
-		if ( 'html5' === $format ) {
-			echo '</nav>';
-		}
-        ?>
+            if ( get_queried_object_id() === $recent_post->ID ) {
+                $aria_current = ' aria-current="page"';
+            }
+            ?>
+            <article id="post-<?php echo $recent_post->ID; ?>" <?php post_class( '', $recent_post->ID ); ?>>
+                <header class="entry-header">
+                    <h2><?php echo $title; ?></h2>
+                    <?php if ( $show_date ) : ?>
+                    <span class="post-date"><?php echo get_the_date( '', $recent_post->ID ); ?></span>
+                <?php endif; ?>
+                </header>
+                <div class="entry-content">
+                    <?php echo $recent_post->post_content; ?>
+                </div>
+            </article>
+        <?php endforeach; ?>
 
-        <div class="lala">
         </div>
 
         <input type="button" class="load-more" value="<?php _e( 'Load More', 'rather-simple-infinite-latest-posts' ); ?>" data-offset="5" />
