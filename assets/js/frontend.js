@@ -30,7 +30,6 @@
                         offset: 0
                     },
                     success: function( result ) {
-                        /* handling of the output returned by PHP function */
                         $( '.widget_infinite_latest_posts .infinite-posts' ).html( result );
                         $this.attr( 'data-offset', parseInt( $this.attr( 'data-offset' ) ) + 2 );
                     },
@@ -66,8 +65,6 @@
                         offset: $this.attr( 'data-offset' )
                     },
                     success: function( result ) {
-                        /* handling of the output returned by PHP function */
-                        console.log(result);
                         $( '.widget_infinite_latest_posts .infinite-posts' ).append( result );
                         $this.attr( 'data-offset', parseInt( $this.attr( 'data-offset' ) ) + 2 );
                     },
