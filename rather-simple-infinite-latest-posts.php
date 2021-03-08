@@ -57,17 +57,20 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
         wp_localize_script( 'rsilp-script', 'rsilp_params', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
     }
 
-
+    /**
+	 * Load more posts via AJAX
+	 *
+	 */
     function my_load_recent_posts() {
         $offset = $_POST['offset'];
         $args = array(
-            'posts_per_page'      => 5,
+            'posts_per_page'      => 2,
             'no_found_rows'       => true,
             'post_status'         => 'publish',
             'ignore_sticky_posts' => true,
             'offset'              => $offset,
         );
-        query_posts( $args ); /* [1] */
+        query_posts( $args );
 
         /* Header wrap output */
         if ( have_posts() ) :
@@ -104,6 +107,54 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 	 * @param array $instance Settings for the current Recent Posts widget instance.
 	 */
 	public function widget( $args, $instance ) {
+		if ( ! isset( $args['widget_id'] ) ) {
+			$args['widget_id'] = $this->id;
+		}
+
+		$default_title = __( 'Infinite Latest Posts', 'rather-simple-infinite-latest-posts' );
+		$title         = ( ! empty( $instance['title'] ) ) ? $instance['title'] : $default_title;
+
+		/** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
+		$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
+
+		$number = ( ! empty( $instance['number'] ) ) ? absint( $instance['number'] ) : 5;
+		if ( ! $number ) {
+			$number = 5;
+		}
+		$show_date = isset( $instance['show_date'] ) ? $instance['show_date'] : false;
+
+		$r = new WP_Query(
+            array(
+                'posts_per_page'      => $number,
+                'no_found_rows'       => true,
+                'post_status'         => 'publish',
+                'ignore_sticky_posts' => true
+            )
+		);
+
+		if ( ! $r->have_posts() ) {
+			return;
+		}
+		?>
+
+		<?php echo $args['before_widget']; ?>
+
+		<?php
+		if ( $title ) {
+			echo $args['before_title'] . $title . $args['after_title'];
+		}
+		?>
+
+        <div class="infinite-posts">
+        </div>
+
+        <input type="button" class="load-more" value="<?php _e( 'Load More', 'rather-simple-infinite-latest-posts' ); ?>" data-offset="<?php echo esc_attr( $number ); ?>" />
+
+        <?php
+		echo $args['after_widget'];
+	}
+
+	public function widget_old( $args, $instance ) {
 		if ( ! isset( $args['widget_id'] ) ) {
 			$args['widget_id'] = $this->id;
 		}
