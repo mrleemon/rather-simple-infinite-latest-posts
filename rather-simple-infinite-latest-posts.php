@@ -52,7 +52,6 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 	 */
     function enqueue_scripts() {
         // Load scripts
-        //wp_enqueue_script( 'infinite-scroll', plugins_url( '/assets/js/infinite-scroll.pkgd.min.js', __FILE__ ), array( 'jquery' ), false, true );
         wp_enqueue_script( 'rsilp-script', plugins_url( '/assets/js/frontend.js', __FILE__ ), array( 'jquery' /*, 'infinite-scroll'*/ ), false, true );
         wp_localize_script( 'rsilp-script', 'rsilp_params', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
     }
@@ -72,7 +71,6 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
         );
         query_posts( $args );
 
-        /* Header wrap output */
         if ( have_posts() ) :
             while ( have_posts() ) :
                 the_post();
@@ -87,10 +85,7 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
                 </article>
             <?php
             endwhile;
-        else :
-            /* Output for if there are no posts to get */
         endif;
-        /* Footer wrap output */
 
         wp_reset_query();
 
@@ -123,21 +118,7 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 		}
 		$show_date = isset( $instance['show_date'] ) ? $instance['show_date'] : false;
 
-		$r = new WP_Query(
-            array(
-                'posts_per_page'      => $number,
-                'no_found_rows'       => true,
-                'post_status'         => 'publish',
-                'ignore_sticky_posts' => true
-            )
-		);
-
-		if ( ! $r->have_posts() ) {
-			return;
-		}
-		?>
-
-		<?php echo $args['before_widget']; ?>
+		echo $args['before_widget']; ?>
 
 		<?php
 		if ( $title ) {
@@ -145,80 +126,7 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 		}
 		?>
 
-        <div class="infinite-posts">
-        </div>
-
-        <input type="button" class="load-more" value="<?php _e( 'Load More', 'rather-simple-infinite-latest-posts' ); ?>" data-offset="<?php echo esc_attr( $number ); ?>" />
-
-        <?php
-		echo $args['after_widget'];
-	}
-
-	public function widget_old( $args, $instance ) {
-		if ( ! isset( $args['widget_id'] ) ) {
-			$args['widget_id'] = $this->id;
-		}
-
-		$default_title = __( 'Infinite Latest Posts', 'rather-simple-infinite-latest-posts' );
-		$title         = ( ! empty( $instance['title'] ) ) ? $instance['title'] : $default_title;
-
-		/** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
-		$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
-
-		$number = ( ! empty( $instance['number'] ) ) ? absint( $instance['number'] ) : 5;
-		if ( ! $number ) {
-			$number = 5;
-		}
-		$show_date = isset( $instance['show_date'] ) ? $instance['show_date'] : false;
-
-		$r = new WP_Query(
-            array(
-                'posts_per_page'      => $number,
-                'no_found_rows'       => true,
-                'post_status'         => 'publish',
-                'ignore_sticky_posts' => true
-            )
-		);
-
-		if ( ! $r->have_posts() ) {
-			return;
-		}
-		?>
-
-		<?php echo $args['before_widget']; ?>
-
-		<?php
-		if ( $title ) {
-			echo $args['before_title'] . $title . $args['after_title'];
-		}
-		?>
-
-        <div class="infinite-posts">
-
-        <?php foreach ( $r->posts as $recent_post ) : ?>
-            <?php
-            $post_title   = get_the_title( $recent_post->ID );
-            $title        = ( ! empty( $post_title ) ) ? $post_title : __( '(no title)' );
-            $aria_current = '';
-
-            if ( get_queried_object_id() === $recent_post->ID ) {
-                $aria_current = ' aria-current="page"';
-            }
-            ?>
-            <article id="post-<?php echo $recent_post->ID; ?>" <?php post_class( '', $recent_post->ID ); ?>>
-                <header class="entry-header">
-                    <h2 class="entry-title"><?php echo $title; ?></h2>
-                    <?php if ( $show_date ) : ?>
-                    <span class="post-date"><?php echo get_the_date( '', $recent_post->ID ); ?></span>
-                <?php endif; ?>
-                </header>
-                <div class="entry-content">
-                    <?php echo $recent_post->post_content; ?>
-                </div>
-            </article>
-        <?php endforeach; ?>
-
-        </div>
+        <div class="infinite-posts"></div>
 
         <input type="button" class="load-more" value="<?php _e( 'Load More', 'rather-simple-infinite-latest-posts' ); ?>" data-offset="<?php echo esc_attr( $number ); ?>" />
 
