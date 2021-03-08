@@ -41,8 +41,8 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 		$this->alt_option_name = 'widget_infinite_latest_posts';
         
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-        add_action( 'wp_ajax_my_load_recent', array( $this, 'my_load_recent_posts' ) );
-        add_action( 'wp_ajax_nopriv_my_load_recent', array( $this, 'my_load_recent_posts' ) );
+        add_action( 'wp_ajax_load_posts', array( $this, 'load_posts' ) );
+        add_action( 'wp_ajax_nopriv_load_posts', array( $this, 'load_posts' ) );
     
 	}
 
@@ -57,10 +57,10 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
     }
 
     /**
-	 * Load more posts via AJAX
+	 * Load posts via AJAX
 	 *
 	 */
-    function my_load_recent_posts() {
+    function load_posts() {
         $offset = $_POST['offset'];
         $args = array(
             'posts_per_page'      => 2,
@@ -70,7 +70,7 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
             'offset'              => $offset,
         );
         query_posts( $args );
-
+        
         if ( have_posts() ) :
             while ( have_posts() ) :
                 the_post();

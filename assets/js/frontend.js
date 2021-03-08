@@ -24,16 +24,15 @@
             $.ajax( rsilp_params.ajax_url,
                 {
                     method: 'POST',
+                    cache: false,
                     data: {
-                        action: 'my_load_recent',
+                        action: 'load_posts',
                         offset: 0
                     },
                     success: function( result ) {
                         /* handling of the output returned by PHP function */
                         $( '.widget_infinite_latest_posts .infinite-posts' ).html( result );
-                        //$( '.widget_infinite_latest_posts .infinite-posts' ).append( '<b>test</b>' );
                         $this.attr( 'data-offset', parseInt( $this.attr( 'data-offset' ) ) + 2 );
-                        /* $this.data( 'offset', $this.data( 'offset' ) + 5 ); */
                     },
                     error: function() {
                         /* what to do if there's a server error, like 404 */
@@ -61,12 +60,14 @@
             $.ajax( rsilp_params.ajax_url,
                 {
                     method: 'POST',
+                    cache: false,
                     data: {
-                        action: 'my_load_recent',
-                        offset: $this.data( 'offset' )
+                        action: 'load_posts',
+                        offset: $this.attr( 'data-offset' )
                     },
                     success: function( result ) {
                         /* handling of the output returned by PHP function */
+                        console.log(result);
                         $( '.widget_infinite_latest_posts .infinite-posts' ).append( result );
                         $this.attr( 'data-offset', parseInt( $this.attr( 'data-offset' ) ) + 2 );
                     },
