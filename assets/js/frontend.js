@@ -27,11 +27,12 @@
                     cache: false,
                     data: {
                         action: 'load_posts',
+                        number: $this.attr( 'data-number' ),
                         offset: 0
                     },
                     success: function( result ) {
                         $( '.widget_infinite_latest_posts .infinite-posts' ).html( result );
-                        $this.attr( 'data-offset', parseInt( $this.attr( 'data-offset' ) ) + 2 );
+                        $this.attr( 'data-offset', parseInt( $this.attr( 'data-offset' ) ) + parseInt( $this.attr( 'data-number' ) ) );
                     },
                     error: function() {
                         /* what to do if there's a server error, like 404 */
@@ -62,11 +63,12 @@
                     cache: false,
                     data: {
                         action: 'load_posts',
+                        number: $this.attr( 'data-number' ),
                         offset: $this.attr( 'data-offset' )
                     },
                     success: function( result ) {
                         $( '.widget_infinite_latest_posts .infinite-posts' ).append( result );
-                        $this.attr( 'data-offset', parseInt( $this.attr( 'data-offset' ) ) + 2 );
+                        $this.attr( 'data-offset', parseInt( $this.attr( 'data-offset' ) ) + parseInt( $this.attr( 'data-number' ) ) );
                     },
                     error: function() {
                         /* what to do if there's a server error, like 404 */
