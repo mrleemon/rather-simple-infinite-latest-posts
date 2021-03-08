@@ -69,11 +69,10 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
             'ignore_sticky_posts' => true,
             'offset'              => $offset,
         );
-        query_posts( $args );
-        
-        if ( have_posts() ) :
-            while ( have_posts() ) :
-                the_post();
+        $result = new WP_Query( $args );
+        if ( $result->have_posts() ) :
+            while ( $result->have_posts() ) :
+                $result->the_post();
             ?>
                 <article id="post-<?php the_ID(); ?>" <?php post_class( '', get_the_ID() ); ?>>
                 <header class="entry-header">
@@ -87,7 +86,8 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
             endwhile;
         endif;
 
-        wp_reset_query();
+        // Restore original post data
+        wp_reset_postdata();
 
 	    wp_die();
     }
