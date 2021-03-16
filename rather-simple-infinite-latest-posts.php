@@ -52,7 +52,7 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 	 */
     function enqueue_scripts() {
         // Load scripts
-        wp_enqueue_script( 'rsilp-script', plugins_url( '/assets/js/frontend.js', __FILE__ ), array( 'jquery' /*, 'infinite-scroll'*/ ), false, true );
+        wp_enqueue_script( 'rsilp-script', plugins_url( '/assets/js/frontend.js', __FILE__ ), array( 'jquery' ), false, true );
         wp_localize_script( 'rsilp-script', 'rsilp_params', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
     }
 
@@ -78,10 +78,18 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
                 <article id="post-<?php the_ID(); ?>" <?php post_class( '', get_the_ID() ); ?>>
                 <header class="entry-header">
                     <h2 class="entry-title"><?php the_title(); ?></h2>
-                </header>
+                </header><!-- .entry-header -->
                 <div class="entry-content">
                     <?php the_content(); ?>
-                </div>
+                </div><!-- .entry-content -->
+                <footer class="entry-footer">
+                <?php
+                    edit_post_link(
+                        __( 'Edit', 'rather-simple-infinite-latest-posts' ),
+                        '<span class="edit-link"></span>'
+                    );
+                ?>
+                </footer><!-- .entry-footer -->
                 </article>
             <?php
             endwhile;
