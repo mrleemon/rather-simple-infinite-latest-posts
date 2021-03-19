@@ -39,7 +39,12 @@
                     },
                     success: function( result ) {
                         $( '.widget_infinite_latest_posts .infinite-posts' ).html( result );
-                        $this.attr( 'data-offset', parseInt( $this.attr( 'data-offset' ) ) + parseInt( $this.attr( 'data-number' ) ) );
+                        //$this.attr( 'data-offset', parseInt( $this.attr( 'data-offset' ) ) );
+                        // Get stored sidebar scroll position and move to it
+                        var top = sessionStorage.getItem( 'sidebar-scroll' );
+                        if ( top !== null ) {
+                            sidebar.scrollTop = parseInt( top, 10 );
+                        }
                     },
                     error: function() {
                         /* what to do if there's a server error, like 404 */
