@@ -63,12 +63,15 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
     function load_posts() {
         $number = $_POST['number'];
         $offset = $_POST['offset'];
+        $total = $_POST['total'];
         $args = array(
-            'posts_per_page'      => $number,
+            'posts_per_page'      => $total,
             'no_found_rows'       => true,
             'post_status'         => 'publish',
             'ignore_sticky_posts' => true,
             'offset'              => $offset,
+            'order'               => 'DESC',
+            'orderby'             => 'date',
         );
         $result = new WP_Query( $args );
         if ( $result->have_posts() ) :
@@ -137,7 +140,7 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 
         <div class="infinite-posts"></div>
 
-        <input type="button" class="load-more" value="<?php _e( 'Load More', 'rather-simple-infinite-latest-posts' ); ?>" data-number="<?php echo esc_attr( $number ); ?>" data-offset="<?php echo esc_attr( $number ); ?>" />
+        <input type="button" class="load-more" value="<?php _e( 'Load More', 'rather-simple-infinite-latest-posts' ); ?>" data-number="<?php echo esc_attr( $number ); ?>" data-offset="<?php echo esc_attr( $number ); ?>" data-total="<?php echo esc_attr( $number ); ?>" />
 
         <?php
 		echo $args['after_widget'];
