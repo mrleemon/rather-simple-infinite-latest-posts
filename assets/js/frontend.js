@@ -29,8 +29,8 @@
             $this = $( '.widget_infinite_latest_posts .load-more' );
             $.ajax( rsilp_params.ajax_url,
                 {
-                    method: 'POST',
-                    cache: false,
+                    method: 'GET',
+                    cache: true,
                     data: {
                         action: 'load_posts',
                         number: $this.attr( 'data-number' ),
@@ -45,6 +45,7 @@
                         if ( top !== null ) {
                             sidebar.scrollTop = parseInt( top, 10 );
                         }
+                        $this.show();
                     },
                     error: function() {
                         /* what to do if there's a server error, like 404 */
@@ -71,8 +72,8 @@
             $this = $( this );
             $.ajax( rsilp_params.ajax_url,
                 {
-                    method: 'POST',
-                    cache: false,
+                    method: 'GET',
+                    cache: true,
                     data: {
                         action: 'load_posts',
                         number: $this.attr( 'data-number' ),

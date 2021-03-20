@@ -28,8 +28,8 @@
             $this = $( '.widget_infinite_latest_posts .load-more' );
             $.ajax( rsilp_params.ajax_url,
                 {
-                    method: 'POST',
-                    cache: false,
+                    method: 'GET',
+                    cache: true,
                     data: {
                         action: 'load_posts',
                         number: $this.attr( 'data-number' ),
@@ -64,8 +64,8 @@
             $this = $( this );
             $.ajax( rsilp_params.ajax_url,
                 {
-                    method: 'POST',
-                    cache: false,
+                    method: 'GET',
+                    cache: true,
                     data: {
                         action: 'load_posts',
                         number: $this.attr( 'data-number' ),
