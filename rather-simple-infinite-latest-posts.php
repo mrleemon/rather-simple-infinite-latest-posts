@@ -51,6 +51,9 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 	 *
 	 */
     function enqueue_scripts() {
+        // Load styles
+        wp_enqueue_style( 'rsilp-style', plugins_url( 'style.css', __FILE__ ) );
+
         // Load scripts
         wp_enqueue_script( 'rsilp-script', plugins_url( '/assets/js/frontend.js', __FILE__ ), array( 'jquery' ), false, true );
         wp_localize_script( 'rsilp-script', 'rsilp_params', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
@@ -61,9 +64,9 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 	 *
 	 */
     function load_posts() {
-        $number = $_POST['number'];
-        $offset = $_POST['offset'];
-        $total = $_POST['total'];
+        $number = $_GET['number'];
+        $offset = $_GET['offset'];
+        $total = $_GET['total'];
         $args = array(
             'posts_per_page'      => $total,
             'no_found_rows'       => true,
