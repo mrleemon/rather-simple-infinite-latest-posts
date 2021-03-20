@@ -43,6 +43,8 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
         add_action( 'wp_ajax_load_posts', array( $this, 'load_posts' ) );
         add_action( 'wp_ajax_nopriv_load_posts', array( $this, 'load_posts' ) );
+
+        add_action( 'rest_api_init', array( $this, 'rest_api_init' ) );
     
 	}
 
@@ -57,6 +59,41 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
         // Load scripts
         wp_enqueue_script( 'rsilp-script', plugins_url( '/assets/js/frontend.js', __FILE__ ), array( 'jquery' ), false, true );
         wp_localize_script( 'rsilp-script', 'rsilp_params', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+
+        // Load scripts REST API
+        wp_enqueue_script( 'rsilp-script-rest', plugins_url( '/assets/js/frontend-rest.js', __FILE__ ), array( 'jquery' ), false, true );
+        wp_localize_script( 'rsilp-script-rest', 'rsilp_params_rest', array(
+            'rest_url'   => rest_url(),
+            'rest_nonce' => wp_create_nonce( 'wp_rest' )
+        ) );
+    }
+
+    /**
+	 * Register REST route
+	 *
+	 */
+    function rest_api_init() {
+        register_rest_route( 'rsilp/v1', '/posts/number=(?P<number>[0-9-]+)/offset=(?P<offset>[0-9-]+)/total=(?P<total>[0-9-]+)', array(
+            'method'   => 'GET',
+            'callback' => array( $this, 'load_posts_rest' ),
+            'args'     => array(
+                'number' => array(
+                    'validate_callback' => function( $param, $request, $key ) {
+                        return is_numeric( $param );
+                    }
+                ),
+                'offset' => array(
+                    'validate_callback' => function( $param, $request, $key ) {
+                        return is_numeric( $param );
+                    }
+                ),
+                'total' => array(
+                    'validate_callback' => function( $param, $request, $key ) {
+                        return is_numeric( $param );
+                    }
+                ),
+            ),
+        ) );
     }
 
     /**
@@ -107,7 +144,55 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 	    wp_die();
     }
 
-	/**
+    /**
+	 * Load posts via REST
+	 *
+	 */
+    function load_posts_rest( WP_REST_Request $request ) {
+        $number = $request['number'];
+        $offset = $request['offset'];
+        $total = $request['total'];
+        $args = array(
+            'posts_per_page'      => $total,
+            'no_found_rows'       => true,
+            'post_status'         => 'publish',
+            'ignore_sticky_posts' => true,
+            'offset'              => $offset,
+            'order'               => 'DESC',
+            'orderby'             => 'date',
+        );
+        $result = new WP_Query( $args );
+        if ( $result->have_posts() ) :
+            while ( $result->have_posts() ) :
+                $result->the_post();
+            ?>
+                <article id="post-<?php the_ID(); ?>" <?php post_class( '', get_the_ID() ); ?>>
+                <header class="entry-header">
+                    <h2 class="entry-title"><?php the_title(); ?></h2>
+                </header><!-- .entry-header -->
+                <div class="entry-content">
+                    <?php the_content(); ?>
+                </div><!-- .entry-content -->
+                <footer class="entry-footer">
+                <?php
+                    edit_post_link(
+                        __( 'Edit', 'rather-simple-infinite-latest-posts' ),
+                        '<span class="edit-link"></span>'
+                    );
+                ?>
+                </footer><!-- .entry-footer -->
+                </article>
+            <?php
+            endwhile;
+        endif;
+
+        // Restore original post data
+        wp_reset_postdata();
+
+	    wp_die();
+    }
+
+    /**
 	 * Outputs the content for the current Recent Posts widget instance.
 	 *
 	 * @since 2.8.0
