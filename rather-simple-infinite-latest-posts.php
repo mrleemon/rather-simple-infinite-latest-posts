@@ -61,11 +61,11 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
         wp_localize_script( 'rsilp-script', 'rsilp_params', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 
         // Load scripts REST API
-        wp_enqueue_script( 'rsilp-script-rest', plugins_url( '/assets/js/frontend-rest.js', __FILE__ ), array( 'jquery' ), false, true );
+        /* wp_enqueue_script( 'rsilp-script-rest', plugins_url( '/assets/js/frontend-rest.js', __FILE__ ), array( 'jquery' ), false, true );
         wp_localize_script( 'rsilp-script-rest', 'rsilp_params_rest', array(
             'rest_url'   => rest_url(),
             'rest_nonce' => wp_create_nonce( 'wp_rest' )
-        ) );
+        ) ); */
     }
 
     /**
@@ -73,10 +73,15 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 	 *
 	 */
     function rest_api_init() {
-        register_rest_route( 'rsilp/v1', '/posts/number=(?P<number>[0-9-]+)/offset=(?P<offset>[0-9-]+)/total=(?P<total>[0-9-]+)', array(
-            'method'   => 'GET',
-            'callback' => array( $this, 'load_posts_rest' ),
-            'args'     => array(
+        //register_rest_route( 'rsilp/v1', '/posts/number=(?P<number>[0-9-]+)/offset=(?P<offset>[0-9-]+)
+        ///total=(?P<total>[0-9-]+)', array(
+        //register_rest_route( 'rsilp/v1', '/posts/\?number=(?P<number>[\d]+)&offset=(?P<offset>[\d]+)&
+        //total=(?P<total>[\d]+)', array(
+        register_rest_route( 'rsilp/v1', '/posts', array(
+            'methods'             => 'GET',
+            'callback'            => array( $this, 'load_posts_rest' ),
+            'permission_callback' => '__return_true',
+            'args'                => array(
                 'number' => array(
                     'validate_callback' => function( $param, $request, $key ) {
                         return is_numeric( $param );
@@ -152,6 +157,7 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
         $number = $request['number'];
         $offset = $request['offset'];
         $total = $request['total'];
+        $data = array();
         $args = array(
             'posts_per_page'      => $total,
             'no_found_rows'       => true,
@@ -165,31 +171,13 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
         if ( $result->have_posts() ) :
             while ( $result->have_posts() ) :
                 $result->the_post();
-            ?>
-                <article id="post-<?php the_ID(); ?>" <?php post_class( '', get_the_ID() ); ?>>
-                <header class="entry-header">
-                    <h2 class="entry-title"><?php the_title(); ?></h2>
-                </header><!-- .entry-header -->
-                <div class="entry-content">
-                    <?php the_content(); ?>
-                </div><!-- .entry-content -->
-                <footer class="entry-footer">
-                <?php
-                    edit_post_link(
-                        __( 'Edit', 'rather-simple-infinite-latest-posts' ),
-                        '<span class="edit-link"></span>'
-                    );
-                ?>
-                </footer><!-- .entry-footer -->
-                </article>
-            <?php
+                $data['ID'] = get_the_ID();
+                $data['post_title'] = get_the_title();
+                $data['post_content'] = get_the_content();
             endwhile;
         endif;
 
-        // Restore original post data
-        wp_reset_postdata();
-
-	    wp_die();
+        return json_encode( $data );
     }
 
     /**

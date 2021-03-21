@@ -35,7 +35,6 @@
                         xhr.setRequestHeader( 'X-WP-Nonce', rsilp_params_rest.rest_nonce )
                     },
                     data: {
-                        action: 'load_posts',
                         number: $this.attr( 'data-number' ),
                         offset: 0,
                         total: $this.attr( 'data-total' ),
@@ -81,7 +80,6 @@
                         xhr.setRequestHeader( 'X-WP-Nounce', rsilp_params_rest.rest_nonce )
                     },
                     data: {
-                        action: 'load_posts',
                         number: $this.attr( 'data-number' ),
                         offset: $this.attr( 'data-offset' ),
                         total: $this.attr( 'data-number' ),
