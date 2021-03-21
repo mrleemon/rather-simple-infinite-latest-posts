@@ -61,11 +61,11 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
         wp_localize_script( 'rsilp-script', 'rsilp_params', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 
         // Load scripts REST API
-        /* wp_enqueue_script( 'rsilp-script-rest', plugins_url( '/assets/js/frontend-rest.js', __FILE__ ), array( 'jquery' ), false, true );
+        /*wp_enqueue_script( 'rsilp-script-rest', plugins_url( '/assets/js/frontend-rest.js', __FILE__ ), array( 'jquery' ), false, true );
         wp_localize_script( 'rsilp-script-rest', 'rsilp_params_rest', array(
             'rest_url'   => rest_url(),
             'rest_nonce' => wp_create_nonce( 'wp_rest' )
-        ) ); */
+        ) );*/
     }
 
     /**
@@ -73,10 +73,6 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 	 *
 	 */
     function rest_api_init() {
-        //register_rest_route( 'rsilp/v1', '/posts/number=(?P<number>[0-9-]+)/offset=(?P<offset>[0-9-]+)
-        ///total=(?P<total>[0-9-]+)', array(
-        //register_rest_route( 'rsilp/v1', '/posts/\?number=(?P<number>[\d]+)&offset=(?P<offset>[\d]+)&
-        //total=(?P<total>[\d]+)', array(
         register_rest_route( 'rsilp/v1', '/posts', array(
             'methods'             => 'GET',
             'callback'            => array( $this, 'load_posts_rest' ),
@@ -171,9 +167,11 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
         if ( $result->have_posts() ) :
             while ( $result->have_posts() ) :
                 $result->the_post();
-                $data['ID'] = get_the_ID();
-                $data['post_title'] = get_the_title();
-                $data['post_content'] = get_the_content();
+                $data[] = array(
+                    'ID' => get_the_ID(),
+                    'post_title' => get_the_title(),
+                    'post_content' => get_the_content()
+                );
             endwhile;
         endif;
 

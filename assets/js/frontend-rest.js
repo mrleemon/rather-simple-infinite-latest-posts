@@ -40,7 +40,20 @@
                         total: $this.attr( 'data-total' ),
                     },
                     success: function( result ) {
-                        $( '.widget_infinite_latest_posts .infinite-posts' ).html( result );
+                        var html = '';
+                        var jsonData = JSON.parse( result );
+                        console.log( jsonData );
+                        for ( var i = 0; i < jsonData.length; i++ ) {
+                            var post = jsonData[i];
+                            html += '<article id="post-' + post.ID + '">';
+                            html += '<header class="entry-header">';
+                            html += '<h2 class="entry-title">' + post.post_title + '</h2>' ;
+                            html += '</header>';
+                            html += '<div class="entry-content">' + post.post_content + '</div>';
+                            html += '</a>';
+                            html += '</article>';
+                        }
+                        $( '.widget_infinite_latest_posts .infinite-posts' ).html( html );
                         //$this.attr( 'data-offset', parseInt( $this.attr( 'data-offset' ) ) );
                         // Get stored sidebar scroll position and move to it
                         var top = sessionStorage.getItem( 'sidebar-scroll' );
