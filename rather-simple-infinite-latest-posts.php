@@ -57,15 +57,15 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
         wp_enqueue_style( 'rsilp-style', plugins_url( 'style.css', __FILE__ ) );
 
         // Load scripts
-        wp_enqueue_script( 'rsilp-script', plugins_url( '/assets/js/frontend.js', __FILE__ ), array( 'jquery' ), false, true );
-        wp_localize_script( 'rsilp-script', 'rsilp_params', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+        //wp_enqueue_script( 'rsilp-script', plugins_url( '/assets/js/frontend.js', __FILE__ ), array( 'jquery' ), false, true );
+        //wp_localize_script( 'rsilp-script', 'rsilp_params', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 
         // Load scripts REST API
-        /*wp_enqueue_script( 'rsilp-script-rest', plugins_url( '/assets/js/frontend-rest.js', __FILE__ ), array( 'jquery' ), false, true );
+        wp_enqueue_script( 'rsilp-script-rest', plugins_url( '/assets/js/frontend-rest.js', __FILE__ ), array( 'jquery' ), false, true );
         wp_localize_script( 'rsilp-script-rest', 'rsilp_params_rest', array(
             'rest_url'   => rest_url(),
             'rest_nonce' => wp_create_nonce( 'wp_rest' )
-        ) );*/
+        ) );
     }
 
     /**
@@ -171,10 +171,12 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
         if ( $result->have_posts() ) :
             while ( $result->have_posts() ) :
                 $result->the_post();
+                $content = apply_filters( 'the_content', get_the_content() );
+                $content = str_replace( ']]>', ']]&gt;', $content );
                 $data[] = array(
-                    'ID' => get_the_ID(),
-                    'post_title' => get_the_title(),
-                    'post_content' => get_the_content()
+                    'ID'           => get_the_ID(),
+                    'post_title'   => get_the_title(),
+                    'post_content' => $content 
                 );
             endwhile;
         endif;

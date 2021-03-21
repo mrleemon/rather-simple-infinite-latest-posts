@@ -42,15 +42,13 @@
                     success: function( result ) {
                         var html = '';
                         var jsonData = JSON.parse( result );
-                        console.log( jsonData );
                         for ( var i = 0; i < jsonData.length; i++ ) {
                             var post = jsonData[i];
                             html += '<article id="post-' + post.ID + '">';
                             html += '<header class="entry-header">';
-                            html += '<h2 class="entry-title">' + post.post_title + '</h2>' ;
+                            html += '<h2 class="entry-title">' + post.post_title + '</h2>';
                             html += '</header>';
                             html += '<div class="entry-content">' + post.post_content + '</div>';
-                            html += '</a>';
                             html += '</article>';
                         }
                         $( '.widget_infinite_latest_posts .infinite-posts' ).html( html );
@@ -98,7 +96,18 @@
                         total: $this.attr( 'data-number' ),
                     },
                     success: function( result ) {
-                        $( '.widget_infinite_latest_posts .infinite-posts' ).append( result );
+                        var html = '';
+                        var jsonData = JSON.parse( result );
+                        for ( var i = 0; i < jsonData.length; i++ ) {
+                            var post = jsonData[i];
+                            html += '<article id="post-' + post.ID + '">';
+                            html += '<header class="entry-header">';
+                            html += '<h2 class="entry-title">' + post.post_title + '</h2>';
+                            html += '</header>';
+                            html += '<div class="entry-content">' + post.post_content + '</div>';
+                            html += '</article>';
+                        }
+                        $( '.widget_infinite_latest_posts .infinite-posts' ).append( html );
                         $this.attr( 'data-offset', parseInt( $this.attr( 'data-offset' ) ) + parseInt( $this.attr( 'data-number' ) ) );
                         $this.attr( 'data-total', parseInt( $this.attr( 'data-total' ) ) + parseInt( $this.attr( 'data-number' ) ) );
                     },
