@@ -106,13 +106,15 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
         $offset = $_GET['offset'];
         $total = $_GET['total'];
         $args = array(
-            'posts_per_page'      => $total,
-            'no_found_rows'       => true,
-            'post_status'         => 'publish',
-            'ignore_sticky_posts' => true,
-            'offset'              => $offset,
-            'order'               => 'DESC',
-            'orderby'             => 'date',
+            'posts_per_page'         => $total,
+            'no_found_rows'          => true,
+            'post_status'            => 'publish',
+            'ignore_sticky_posts'    => true,
+            'offset'                 => $offset,
+            'order'                  => 'DESC',
+            'orderby'                => 'date',
+            'update_post_term_cache' => false,
+            'update_post_meta_cache' => false,
         );
         $result = new WP_Query( $args );
         if ( $result->have_posts() ) :
@@ -155,13 +157,15 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
         $total = $request['total'];
         $data = array();
         $args = array(
-            'posts_per_page'      => $total,
-            'no_found_rows'       => true,
-            'post_status'         => 'publish',
-            'ignore_sticky_posts' => true,
-            'offset'              => $offset,
-            'order'               => 'DESC',
-            'orderby'             => 'date',
+            'posts_per_page'         => $total,
+            'no_found_rows'          => true,
+            'post_status'            => 'publish',
+            'ignore_sticky_posts'    => true,
+            'offset'                 => $offset,
+            'order'                  => 'DESC',
+            'orderby'                => 'date',
+            'update_post_term_cache' => false,
+            'update_post_meta_cache' => false,
         );
         $result = new WP_Query( $args );
         if ( $result->have_posts() ) :
