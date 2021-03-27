@@ -177,6 +177,7 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
                     'ID'             => get_the_ID(),
                     'post_title'     => get_the_title(),
                     'post_content'   => $content,
+                    'post_class'     => get_post_class(),
                     'post_edit_link' => '<span class="edit-link"><a class="post-edit-link" href="' . esc_url( get_edit_post_link() ) . '">' . __( 'Edit', 'rather-simple-infinite-latest-posts' ) . '</a></span>'
                 );
             endwhile;

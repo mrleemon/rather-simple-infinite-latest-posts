@@ -44,7 +44,7 @@
                         var jsonData = JSON.parse( result );
                         for ( var i = 0; i < jsonData.length; i++ ) {
                             var post = jsonData[i];
-                            html += '<article id="post-' + post.ID + '">';
+                            html += '<article id="post-' + post.ID + '" class="' + post.post_class.join(' ') + '">';
                             html += '<header class="entry-header">';
                             html += '<h2 class="entry-title">' + post.post_title + '</h2>';
                             html += '</header>';
@@ -101,7 +101,7 @@
                         var jsonData = JSON.parse( result );
                         for ( var i = 0; i < jsonData.length; i++ ) {
                             var post = jsonData[i];
-                            html += '<article id="post-' + post.ID + '">';
+                            html += '<article id="post-' + post.ID + '" class="' + post.post_class.join(' ') + '">';
                             html += '<header class="entry-header">';
                             html += '<h2 class="entry-title">' + post.post_title + '</h2>';
                             html += '</header>';
