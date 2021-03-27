@@ -23,58 +23,45 @@
 		
         var sidebar = document.querySelector( '.sidebar' );
 
-        //var html = sessionStorage.getItem( 'posts-html' );
-        //if ( html == null ) {
-            // Get posts from the database if sessionStorage is empty
-            $this = $( '.widget_infinite_latest_posts .load-more' );
-            $.ajax( rsilp_params_rest.rest_url + 'rsilp/v1/posts/',
-                {
-                    method: 'GET',
-                    cache: true,
-                    beforeSend: function ( xhr ) {
-                        xhr.setRequestHeader( 'X-WP-Nonce', rsilp_params_rest.rest_nonce )
-                    },
-                    data: {
-                        number: $this.attr( 'data-number' ),
-                        offset: 0,
-                        total: $this.attr( 'data-total' ),
-                    },
-                    success: function( result ) {
-                        var html = '';
-                        var jsonData = JSON.parse( result );
-                        for ( var i = 0; i < jsonData.length; i++ ) {
-                            var post = jsonData[i];
-                            html += '<article id="post-' + post.ID + '" class="' + post.post_class.join(' ') + '">';
-                            html += '<header class="entry-header">';
-                            html += '<h2 class="entry-title">' + post.post_title + '</h2>';
-                            html += '</header>';
-                            html += '<div class="entry-content">' + post.post_content + '</div>';
-                            html += '<div class="entry-footer">' + post.post_edit_link + '</div>';
-                            html += '</article>';
-                        }
-                        $( '.widget_infinite_latest_posts .infinite-posts' ).html( html );
-                        //$this.attr( 'data-offset', parseInt( $this.attr( 'data-offset' ) ) );
-                        // Get stored sidebar scroll position and move to it
-                        var top = sessionStorage.getItem( 'sidebar-scroll' );
-                        if ( top !== null ) {
-                            sidebar.scrollTop = parseInt( top, 10 );
-                        }
-                        $this.show();
-                    },
-                    error: function() {
-                        /* what to do if there's a server error, like 404 */
+        $this = $( '.widget_infinite_latest_posts .load-more' );
+        $.ajax( rsilp_params_rest.rest_url + 'rsilp/v1/posts/',
+            {
+                method: 'GET',
+                cache: true,
+                beforeSend: function ( xhr ) {
+                    xhr.setRequestHeader( 'X-WP-Nonce', rsilp_params_rest.rest_nonce )
+                },
+                data: {
+                    number: $this.attr( 'data-number' ),
+                    offset: 0,
+                    total: $this.attr( 'data-total' ),
+                },
+                success: function( result ) {
+                    var html = '';
+                    var jsonData = JSON.parse( result );
+                    for ( var i = 0; i < jsonData.length; i++ ) {
+                        var post = jsonData[i];
+                        html += '<article id="post-' + post.ID + '" class="' + post.post_class.join(' ') + '">';
+                        html += '<header class="entry-header">';
+                        html += '<h2 class="entry-title">' + post.post_title + '</h2>';
+                        html += '</header>';
+                        html += '<div class="entry-content">' + post.post_content + '</div>';
+                        html += '<div class="entry-footer">' + post.post_edit_link + '</div>';
+                        html += '</article>';
                     }
+                    $( '.widget_infinite_latest_posts .infinite-posts' ).html( html );
+                    // Get stored sidebar scroll position and move to it
+                    var top = sessionStorage.getItem( 'sidebar-scroll' );
+                    if ( top !== null ) {
+                        sidebar.scrollTop = parseInt( top, 10 );
+                    }
+                    $this.show();
+                },
+                error: function() {
+                    /* what to do if there's a server error, like 404 */
                 }
-            );
-        /*} else {
-            // Get posts from sessionStorage on subsequent loads
-            $( '.widget_infinite_latest_posts .infinite-posts' ).html( html );
-            // Get stored sidebar scroll position and move to it
-            var top = sessionStorage.getItem( 'sidebar-scroll' );
-            if ( top !== null ) {
-                sidebar.scrollTop = parseInt( top, 10 );
             }
-        }*/
+        );
 
         window.addEventListener( 'beforeunload', () => {
             // Store sidebar scroll position in sessionStorage when changing pages
