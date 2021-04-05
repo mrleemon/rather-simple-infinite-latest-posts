@@ -23,44 +23,32 @@
 		
         var sidebar = document.querySelector( '.sidebar' );
 
-        //var html = sessionStorage.getItem( 'posts-html' );
-        //if ( html == null ) {
-            // Get posts from the database if sessionStorage is empty
-            $this = $( '.widget_infinite_latest_posts .load-more' );
-            $.ajax( rsilp_params.ajax_url,
-                {
-                    method: 'GET',
-                    cache: true,
-                    data: {
-                        action: 'load_posts',
-                        number: $this.attr( 'data-number' ),
-                        offset: 0,
-                        total: $this.attr( 'data-total' ),
-                    },
-                    success: function( result ) {
-                        $( '.widget_infinite_latest_posts .infinite-posts' ).html( result );
-                        //$this.attr( 'data-offset', parseInt( $this.attr( 'data-offset' ) ) );
-                        // Get stored sidebar scroll position and move to it
-                        var top = sessionStorage.getItem( 'sidebar-scroll' );
-                        if ( top !== null ) {
-                            sidebar.scrollTop = parseInt( top, 10 );
-                        }
-                        $this.show();
-                    },
-                    error: function() {
-                        /* what to do if there's a server error, like 404 */
+        $this = $( '.widget_infinite_latest_posts .load-more' );
+        $.ajax( rsilp_params.ajax_url,
+            {
+                method: 'GET',
+                cache: true,
+                data: {
+                    action: 'load_posts',
+                    number: $this.attr( 'data-number' ),
+                    offset: 0,
+                    total: $this.attr( 'data-total' ),
+                },
+                success: function( result ) {
+                    $( '.widget_infinite_latest_posts .infinite-posts' ).html( result );
+                    //$this.attr( 'data-offset', parseInt( $this.attr( 'data-offset' ) ) );
+                    // Get stored sidebar scroll position and move to it
+                    var top = sessionStorage.getItem( 'sidebar-scroll' );
+                    if ( top !== null ) {
+                        sidebar.scrollTop = parseInt( top, 10 );
                     }
+                    $this.show();
+                },
+                error: function() {
+                    /* what to do if there's a server error, like 404 */
                 }
-            );
-        /*} else {
-            // Get posts from sessionStorage on subsequent loads
-            $( '.widget_infinite_latest_posts .infinite-posts' ).html( html );
-            // Get stored sidebar scroll position and move to it
-            var top = sessionStorage.getItem( 'sidebar-scroll' );
-            if ( top !== null ) {
-                sidebar.scrollTop = parseInt( top, 10 );
             }
-        }*/
+        );
 
         window.addEventListener( 'beforeunload', () => {
             // Store sidebar scroll position in sessionStorage when changing pages
