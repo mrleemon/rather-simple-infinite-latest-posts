@@ -55,7 +55,10 @@
                     if ( top !== null ) {
                         sidebar.scrollTop = parseInt( top, 10 );
                     }
-                    $this.show();
+                    if ( jsonData.length > 0 ) {
+                        // Show button if there are posts
+                        $this.show();
+                    }
                 },
                 error: function() {
                     /* what to do if there's a server error, like 404 */
@@ -99,6 +102,10 @@
                         $( '.widget_infinite_latest_posts .infinite-posts' ).append( html );
                         $this.attr( 'data-offset', parseInt( $this.attr( 'data-offset' ) ) + parseInt( $this.attr( 'data-number' ) ) );
                         $this.attr( 'data-total', parseInt( $this.attr( 'data-total' ) ) + parseInt( $this.attr( 'data-number' ) ) );
+                        if ( jsonData.length <= 0 ) {
+                            // Hide button if there are no more posts
+                            $this.hide();
+                        }
                     },
                     error: function() {
                         /* what to do if there's a server error, like 404 */
