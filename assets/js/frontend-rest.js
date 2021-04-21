@@ -57,7 +57,8 @@
                     if ( top !== null ) {
                         sidebar.scrollTop = parseInt( top, 10 );
                     }
-                    if ( posts.length > 0 ) {
+                    var total = parseInt( $this.attr( 'data-total' ) );
+                    if ( total <= numposts ) {
                         // Show button if there are posts
                         $this.show();
                     }
