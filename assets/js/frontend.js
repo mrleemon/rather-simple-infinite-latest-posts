@@ -38,9 +38,8 @@
                 },
                 success: function( result ) {
                     var html = '';
-                    var jsonData = JSON.parse( result );
-                    var posts = jsonData.posts;
-                    var numposts = jsonData.numposts;
+                    var posts = result.posts;
+                    var numposts = result.numposts;
                     for ( var i = 0; i < posts.length; i++ ) {
                         var post = posts[i];
                         html += '<article id="post-' + post.ID + '" class="' + post.post_class.join(' ') + '">';
@@ -91,9 +90,8 @@
                     },
                     success: function( result ) {
                         var html = '';
-                        var jsonData = JSON.parse( result );
-                        var posts = jsonData.posts;
-                        var numposts = jsonData.numposts;
+                        var posts = result.posts;
+                        var numposts = result.numposts;
                         for ( var i = 0; i < posts.length; i++ ) {
                             var post = posts[i];
                             html += '<article id="post-' + post.ID + '" class="' + post.post_class.join(' ') + '">';

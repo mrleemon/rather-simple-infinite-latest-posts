@@ -130,7 +130,9 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
         $result['posts'] = $data;
         $result['numposts'] = wp_count_posts()->publish;
 
-        return json_encode( $result );
+        $response = new WP_REST_Response( $result, 200 );
+        $response->set_headers( array( 'Cache-Control' => 'max-age=60' ) );
+        return $response;
     }
 
     /**
