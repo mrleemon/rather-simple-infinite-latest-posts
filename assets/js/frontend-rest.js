@@ -39,8 +39,10 @@
                 success: function( result ) {
                     var html = '';
                     var jsonData = JSON.parse( result );
-                    for ( var i = 0; i < jsonData.length; i++ ) {
-                        var post = jsonData[i];
+                    var posts = jsonData.posts;
+                    var numposts = jsonData.numposts;
+                    for ( var i = 0; i < posts.length; i++ ) {
+                        var post = posts[i];
                         html += '<article id="post-' + post.ID + '" class="' + post.post_class.join(' ') + '">';
                         html += '<header class="entry-header">';
                         html += '<h2 class="entry-title">' + post.post_title + '</h2>';
@@ -55,7 +57,7 @@
                     if ( top !== null ) {
                         sidebar.scrollTop = parseInt( top, 10 );
                     }
-                    if ( jsonData.length > 0 ) {
+                    if ( posts.length > 0 ) {
                         // Show button if there are posts
                         $this.show();
                     }
@@ -89,8 +91,10 @@
                     success: function( result ) {
                         var html = '';
                         var jsonData = JSON.parse( result );
-                        for ( var i = 0; i < jsonData.length; i++ ) {
-                            var post = jsonData[i];
+                        var posts = jsonData.posts;
+                        var numposts = jsonData.numposts;
+                        for ( var i = 0; i < posts.length; i++ ) {
+                            var post = posts[i];
                             html += '<article id="post-' + post.ID + '" class="' + post.post_class.join(' ') + '">';
                             html += '<header class="entry-header">';
                             html += '<h2 class="entry-title">' + post.post_title + '</h2>';
@@ -102,7 +106,7 @@
                         $( '.widget_infinite_latest_posts .infinite-posts' ).append( html );
                         $this.attr( 'data-offset', parseInt( $this.attr( 'data-offset' ) ) + parseInt( $this.attr( 'data-number' ) ) );
                         $this.attr( 'data-total', parseInt( $this.attr( 'data-total' ) ) + parseInt( $this.attr( 'data-number' ) ) );
-                        if ( jsonData.length <= 0 ) {
+                        if ( posts.length <= 0 ) {
                             // Hide button if there are no more posts
                             $this.hide();
                         }

@@ -183,7 +183,14 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
             endwhile;
         endif;
 
-        return json_encode( $data );
+        $published_posts = wp_count_posts()->publish;
+        
+        $res = array();
+        $res['posts'] = $data;
+        $res['numposts'] = $published_posts;
+
+        //return json_encode( $data );
+        return json_encode( $res );
     }
 
     /**
