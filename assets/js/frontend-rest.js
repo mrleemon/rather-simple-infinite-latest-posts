@@ -59,7 +59,7 @@
                     }
                     var total = parseInt( $this.attr( 'data-total' ) );
                     if ( total <= numposts ) {
-                        // Show button if there are posts
+                        // Show button if there are more posts to load
                         $this.show();
                     }
                 },
@@ -109,7 +109,7 @@
                         var total = parseInt( $this.attr( 'data-total' ) ) + parseInt( $this.attr( 'data-number' ) );
                         $this.attr( 'data-total', total );
                         if ( total >= numposts ) {
-                            // Hide button if there are no more posts
+                            // Hide button if there are no more posts to load
                             $this.hide();
                         }
                     },
