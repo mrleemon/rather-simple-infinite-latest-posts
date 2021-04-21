@@ -105,8 +105,9 @@
                         }
                         $( '.widget_infinite_latest_posts .infinite-posts' ).append( html );
                         $this.attr( 'data-offset', parseInt( $this.attr( 'data-offset' ) ) + parseInt( $this.attr( 'data-number' ) ) );
-                        $this.attr( 'data-total', parseInt( $this.attr( 'data-total' ) ) + parseInt( $this.attr( 'data-number' ) ) );
-                        if ( posts.length <= 0 ) {
+                        var total = parseInt( $this.attr( 'data-total' ) ) + parseInt( $this.attr( 'data-number' ) );
+                        $this.attr( 'data-total', total );
+                        if ( total >= numposts ) {
                             // Hide button if there are no more posts
                             $this.hide();
                         }
