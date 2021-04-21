@@ -41,9 +41,6 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 		$this->alt_option_name = 'widget_infinite_latest_posts';
         
         add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-        add_action( 'wp_ajax_load_posts', array( $this, 'load_posts' ) );
-        add_action( 'wp_ajax_nopriv_load_posts', array( $this, 'load_posts' ) );
-
         add_action( 'rest_api_init', array( $this, 'rest_api_init' ) );
     
 	}
@@ -57,10 +54,6 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
         wp_enqueue_style( 'rsilp-style', plugins_url( 'style.css', __FILE__ ) );
 
         // Load scripts
-        //wp_enqueue_script( 'rsilp-script', plugins_url( '/assets/js/frontend.js', __FILE__ ), array( 'jquery' ), false, true );
-        //wp_localize_script( 'rsilp-script', 'rsilp_params', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
-
-        // Load scripts REST API
         wp_enqueue_script( 'rsilp-script-rest', plugins_url( '/assets/js/frontend-rest.js', __FILE__ ), array( 'jquery' ), false, true );
         wp_localize_script( 'rsilp-script-rest', 'rsilp_params_rest', array(
             'rest_url'   => rest_url(),
@@ -98,56 +91,6 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
     }
 
     /**
-	 * Load posts via AJAX
-	 *
-	 */
-    function load_posts() {
-        $number = $_GET['number'];
-        $offset = $_GET['offset'];
-        $total = $_GET['total'];
-        $args = array(
-            'posts_per_page'         => $total,
-            'no_found_rows'          => true,
-            'post_status'            => 'publish',
-            'ignore_sticky_posts'    => true,
-            'offset'                 => $offset,
-            'order'                  => 'DESC',
-            'orderby'                => 'date',
-            'update_post_term_cache' => false,
-            'update_post_meta_cache' => false,
-        );
-        $result = new WP_Query( $args );
-        if ( $result->have_posts() ) :
-            while ( $result->have_posts() ) :
-                $result->the_post();
-            ?>
-                <article id="post-<?php the_ID(); ?>" <?php post_class( '', get_the_ID() ); ?>>
-                <header class="entry-header">
-                    <h2 class="entry-title"><?php the_title(); ?></h2>
-                </header><!-- .entry-header -->
-                <div class="entry-content">
-                    <?php the_content(); ?>
-                </div><!-- .entry-content -->
-                <footer class="entry-footer">
-                <?php
-                    edit_post_link(
-                        __( 'Edit', 'rather-simple-infinite-latest-posts' ),
-                        '<span class="edit-link"></span>'
-                    );
-                ?>
-                </footer><!-- .entry-footer -->
-                </article>
-            <?php
-            endwhile;
-        endif;
-
-        // Restore original post data
-        wp_reset_postdata();
-
-	    wp_die();
-    }
-
-    /**
 	 * Load posts via REST
 	 *
 	 */
@@ -167,10 +110,10 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
             'update_post_term_cache' => false,
             'update_post_meta_cache' => false,
         );
-        $result = new WP_Query( $args );
-        if ( $result->have_posts() ) :
-            while ( $result->have_posts() ) :
-                $result->the_post();
+        $query = new WP_Query( $args );
+        if ( $query->have_posts() ) :
+            while ( $query->have_posts() ) :
+                $query->the_post();
                 $content = apply_filters( 'the_content', get_the_content() );
                 $content = str_replace( ']]>', ']]&gt;', $content );
                 $data[] = array(
@@ -183,14 +126,11 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
             endwhile;
         endif;
 
-        $published_posts = wp_count_posts()->publish;
-        
-        $res = array();
-        $res['posts'] = $data;
-        $res['numposts'] = $published_posts;
+        $result = array();
+        $result['posts'] = $data;
+        $result['numposts'] = wp_count_posts()->publish;
 
-        //return json_encode( $data );
-        return json_encode( $res );
+        return json_encode( result );
     }
 
     /**
