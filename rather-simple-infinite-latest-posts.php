@@ -110,10 +110,10 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
             'update_post_term_cache' => false,
             'update_post_meta_cache' => false,
         );
-        $query = new WP_Query( $args );
-        if ( $query->have_posts() ) :
-            while ( $query->have_posts() ) :
-                $query->the_post();
+        $myquery = new WP_Query( $args );
+        if ( $myquery->have_posts() ) :
+            while ( $myquery->have_posts() ) :
+                $myquery->the_post();
                 $content = apply_filters( 'the_content', get_the_content() );
                 $content = str_replace( ']]>', ']]&gt;', $content );
                 $data[] = array(
@@ -130,7 +130,7 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
         $result['posts'] = $data;
         $result['numposts'] = wp_count_posts()->publish;
 
-        return json_encode( result );
+        return json_encode( $result );
     }
 
     /**

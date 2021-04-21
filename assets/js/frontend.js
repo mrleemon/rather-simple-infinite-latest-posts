@@ -39,7 +39,6 @@
                 success: function( result ) {
                     var html = '';
                     var jsonData = JSON.parse( result );
-                    console.log(jsonData);
                     var posts = jsonData.posts;
                     var numposts = jsonData.numposts;
                     for ( var i = 0; i < posts.length; i++ ) {
