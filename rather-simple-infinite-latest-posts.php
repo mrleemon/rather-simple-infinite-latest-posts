@@ -54,8 +54,8 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
         wp_enqueue_style( 'rsilp-style', plugins_url( 'style.css', __FILE__ ) );
 
         // Load scripts
-        wp_enqueue_script( 'rsilp-script-rest', plugins_url( '/assets/js/frontend-rest.js', __FILE__ ), array( 'jquery' ), false, true );
-        wp_localize_script( 'rsilp-script-rest', 'rsilp_params_rest', array(
+        wp_enqueue_script( 'rsilp-script', plugins_url( '/assets/js/frontend.js', __FILE__ ), array( 'jquery' ), false, true );
+        wp_localize_script( 'rsilp-script', 'rsilp_params_rest', array(
             'rest_url'   => rest_url(),
             'rest_nonce' => wp_create_nonce( 'wp_rest' )
         ) );
