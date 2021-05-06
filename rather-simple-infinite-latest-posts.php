@@ -250,15 +250,15 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" />
 		</p>
 
-        <p>
-            <label for="<?php echo $this->get_field_id( 'category' ); ?>"><?php _e( 'Category:', 'rather-simple-infinite-latest-posts' ); ?></label>
-            <?php wp_dropdown_categories( array( 'show_option_all' => __( 'All Categories', 'rather-simple-infinite-latest-posts' ), 'name' => $this->get_field_name( 'category' ), 'selected' => $category, 'hide_empty' => 0 ) ); ?>
-        </p>
-
 		<p>
 			<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to show:' ); ?></label>
 			<input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1" value="<?php echo $number; ?>" size="3" />
 		</p>
+
+        <p>
+            <label for="<?php echo $this->get_field_id( 'category' ); ?>"><?php _e( 'Category:', 'rather-simple-infinite-latest-posts' ); ?></label>
+            <?php wp_dropdown_categories( array( 'show_option_all' => __( 'All Categories', 'rather-simple-infinite-latest-posts' ), 'name' => $this->get_field_name( 'category' ), 'selected' => $category, 'hide_empty' => 0 ) ); ?>
+        </p>
 
 		<?php
 	}
