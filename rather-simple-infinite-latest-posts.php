@@ -198,7 +198,6 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 		if ( ! $number ) {
 			$number = 5;
 		}
-		$show_date = isset( $instance['show_date'] ) ? $instance['show_date'] : false;
 
 		echo $args['before_widget']; ?>
 
@@ -231,7 +230,6 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 		$instance['title']     = sanitize_text_field( $new_instance['title'] );
 		$instance['number']    = (int) $new_instance['number'];
         $instance['category']  = (int) $new_instance['category'];
-		$instance['show_date'] = isset( $new_instance['show_date'] ) ? (bool) $new_instance['show_date'] : false;
 		return $instance;
 	}
 
@@ -246,7 +244,6 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 		$title     = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
         $category  = isset( $instance['category'] ) ? absint( $instance['category'] ) : 0;
 		$number    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
-		$show_date = isset( $instance['show_date'] ) ? (bool) $instance['show_date'] : false;
 		?>
 		<p>
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
@@ -263,10 +260,6 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 			<input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1" value="<?php echo $number; ?>" size="3" />
 		</p>
 
-		<p>
-			<input class="checkbox" type="checkbox"<?php checked( $show_date ); ?> id="<?php echo $this->get_field_id( 'show_date' ); ?>" name="<?php echo $this->get_field_name( 'show_date' ); ?>" />
-			<label for="<?php echo $this->get_field_id( 'show_date' ); ?>"><?php _e( 'Display post date?' ); ?></label>
-		</p>
 		<?php
 	}
 }
