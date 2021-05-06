@@ -99,12 +99,14 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
         $number = $request['number'];
         $offset = $request['offset'];
         $total = $request['total'];
+
         $data = array();
+
         $args = array(
+            'post_type'              => 'post',
             'posts_per_page'         => $total,
             'no_found_rows'          => true,
             'post_status'            => 'publish',
-            'ignore_sticky_posts'    => true,
             'offset'                 => $offset,
             'order'                  => 'DESC',
             'orderby'                => 'date',
@@ -122,6 +124,7 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
             );
         }
 
+        // Get all posts matching the $request parameters
         $query = new WP_Query( $args );
         if ( $query->have_posts() ) :
             while ( $query->have_posts() ) :
@@ -138,9 +141,31 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
             endwhile;
         endif;
 
+        $args = array(
+            'post_type'              => 'post',
+            'posts_per_page'         => -1,
+            'post_status'            => 'publish',
+            'update_post_term_cache' => false,
+            'update_post_meta_cache' => false,
+        );
+
+        if ( $category != 0 ) {
+            $args['tax_query'] = array(
+                array(
+                    'taxonomy' => 'category',
+                    'field'    => 'id',
+                    'terms'    => $category,
+                ),
+            );
+        }
+
+        // Get total number of posts
+        $query = new WP_Query( $args );
+        $numposts = $query->found_posts;
+
         $result = array();
         $result['posts'] = $data;
-        $result['numposts'] = wp_count_posts()->publish;
+        $result['numposts'] = $numposts;
 
         $response = new WP_REST_Response( $result, 200 );
         $response->set_headers( array( 'Cache-Control' => 'max-age=60' ) );
