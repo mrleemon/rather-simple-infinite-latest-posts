@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Rather Simple Infinite Latest Posts\n"
-"POT-Creation-Date: 2021-03-06 16:40+0100\n"
-"PO-Revision-Date: 2021-03-06 16:40+0100\n"
+"POT-Creation-Date: 2021-05-06 11:41+0200\n"
+"PO-Revision-Date: 2021-05-06 11:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 2.4.3\n"
 "X-Poedit-Basepath: ..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
@@ -26,23 +26,35 @@ msgid "Your site&#8217;s most recent Posts."
 msgstr ""
 
 #: rather-simple-infinite-latest-posts.php:40
-#: rather-simple-infinite-latest-posts.php:58
+#: rather-simple-infinite-latest-posts.php:164
 msgid "Infinite Latest Posts"
 msgstr ""
 
-#: rather-simple-infinite-latest-posts.php:123
-msgid "(no title)"
+#: rather-simple-infinite-latest-posts.php:136
+msgid "Edit"
 msgstr ""
 
-#: rather-simple-infinite-latest-posts.php:178
+#: rather-simple-infinite-latest-posts.php:188
+msgid "Load More"
+msgstr "Cargar más"
+
+#: rather-simple-infinite-latest-posts.php:227
 msgid "Title:"
 msgstr ""
 
-#: rather-simple-infinite-latest-posts.php:183
+#: rather-simple-infinite-latest-posts.php:232
+msgid "Category:"
+msgstr "Categoría:"
+
+#: rather-simple-infinite-latest-posts.php:233
+msgid "All Categories"
+msgstr "Todas las categorías"
+
+#: rather-simple-infinite-latest-posts.php:237
 msgid "Number of posts to show:"
 msgstr ""
 
-#: rather-simple-infinite-latest-posts.php:189
+#: rather-simple-infinite-latest-posts.php:243
 msgid "Display post date?"
 msgstr ""
 

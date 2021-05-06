@@ -95,6 +95,7 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 	 *
 	 */
     function load_posts_rest( WP_REST_Request $request ) {
+        $category = $request['category'];
         $number = $request['number'];
         $offset = $request['offset'];
         $total = $request['total'];
@@ -110,6 +111,17 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
             'update_post_term_cache' => false,
             'update_post_meta_cache' => false,
         );
+
+        if ( $category != 0 ) {
+            $args['tax_query'] = array(
+                array(
+                    'taxonomy' => 'category',
+                    'field'    => 'id',
+                    'terms'    => $category,
+                ),
+            );
+        }
+
         $query = new WP_Query( $args );
         if ( $query->have_posts() ) :
             while ( $query->have_posts() ) :
@@ -155,6 +167,8 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 		/** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
 		$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
 
+        $category = ( ! empty( $instance['category'] ) ) ? absint( $instance['category'] ) : 0;
+
 		$number = ( ! empty( $instance['number'] ) ) ? absint( $instance['number'] ) : 5;
 		if ( ! $number ) {
 			$number = 5;
@@ -171,7 +185,7 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 
         <div class="infinite-posts"></div>
 
-        <input type="button" class="load-more" value="<?php _e( 'Load More', 'rather-simple-infinite-latest-posts' ); ?>" data-number="<?php echo esc_attr( $number ); ?>" data-offset="<?php echo esc_attr( $number ); ?>" data-total="<?php echo esc_attr( $number ); ?>" />
+        <input type="button" class="load-more" value="<?php _e( 'Load More', 'rather-simple-infinite-latest-posts' ); ?>" data-category="<?php echo esc_attr( $category ); ?>" data-number="<?php echo esc_attr( $number ); ?>" data-offset="<?php echo esc_attr( $number ); ?>" data-total="<?php echo esc_attr( $number ); ?>" />
 
         <?php
 		echo $args['after_widget'];
@@ -191,6 +205,7 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 		$instance              = $old_instance;
 		$instance['title']     = sanitize_text_field( $new_instance['title'] );
 		$instance['number']    = (int) $new_instance['number'];
+        $instance['category']  = (int) $new_instance['category'];
 		$instance['show_date'] = isset( $new_instance['show_date'] ) ? (bool) $new_instance['show_date'] : false;
 		return $instance;
 	}
@@ -204,6 +219,7 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 	 */
 	public function form( $instance ) {
 		$title     = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
+        $category  = isset( $instance['category'] ) ? absint( $instance['category'] ) : 0;
 		$number    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
 		$show_date = isset( $instance['show_date'] ) ? (bool) $instance['show_date'] : false;
 		?>
@@ -211,6 +227,11 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
 			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" />
 		</p>
+
+        <p>
+            <label for="<?php echo $this->get_field_id( 'category' ); ?>"><?php _e( 'Category:', 'rather-simple-infinite-latest-posts' ); ?></label>
+            <?php wp_dropdown_categories( array( 'show_option_all' => __( 'All Categories', 'rather-simple-infinite-latest-posts' ), 'name' => $this->get_field_name( 'category' ), 'selected' => $category, 'hide_empty' => 0 ) ); ?>
+        </p>
 
 		<p>
 			<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to show:' ); ?></label>
