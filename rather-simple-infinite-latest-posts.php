@@ -131,12 +131,13 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
                 $query->the_post();
                 $content = apply_filters( 'the_content', get_the_content() );
                 $content = str_replace( ']]>', ']]&gt;', $content );
+                $post_edit_link = get_edit_post_link() ? '<span class="edit-link"><a class="post-edit-link" href="' . esc_url( get_edit_post_link() ) . '">' . __( 'Edit', 'rather-simple-infinite-latest-posts' ) . '</a></span>' : '';
                 $data[] = array(
                     'ID'             => get_the_ID(),
                     'post_title'     => get_the_title(),
                     'post_content'   => $content,
                     'post_class'     => get_post_class(),
-                    'post_edit_link' => '<span class="edit-link"><a class="post-edit-link" href="' . esc_url( get_edit_post_link() ) . '">' . __( 'Edit', 'rather-simple-infinite-latest-posts' ) . '</a></span>'
+                    'post_edit_link' => $post_edit_link
                 );
             endwhile;
         endif;
