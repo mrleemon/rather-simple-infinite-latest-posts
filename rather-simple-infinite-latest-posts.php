@@ -2,6 +2,7 @@
 /*
 Plugin Name: Rather Simple Infinite Latest Posts
 Plugin URI:
+Update URI: false
 Description: A really simple infinite latest posts widget.
 Version: 1.0
 Author: Oscar Ciutat
