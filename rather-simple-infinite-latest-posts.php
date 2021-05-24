@@ -3,11 +3,13 @@
 Plugin Name: Rather Simple Infinite Latest Posts
 Plugin URI:
 Update URI: false
-Description: A really simple infinite latest posts widget.
 Version: 1.0
+Requires at least: 5.0
+Requires PHP: 7.0
 Author: Oscar Ciutat
 Author URI: http://oscarciutat.com/code/
 Text Domain: rather-simple-infinite-latest-posts
+Description: A really simple infinite latest posts widget.
 License: GPLv2 or later
 
   This program is free software; you can redistribute it and/or modify
