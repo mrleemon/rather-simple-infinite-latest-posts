@@ -74,6 +74,11 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
             'callback'            => array( $this, 'load_posts_rest' ),
             'permission_callback' => '__return_true',
             'args'                => array(
+                'category' => array(
+                    'validate_callback' => function( $param, $request, $key ) {
+                        return is_numeric( $param );
+                    }
+                ),
                 'number' => array(
                     'validate_callback' => function( $param, $request, $key ) {
                         return is_numeric( $param );
