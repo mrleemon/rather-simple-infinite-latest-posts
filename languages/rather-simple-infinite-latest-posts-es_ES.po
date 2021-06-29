@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Rather Simple Infinite Latest Posts\n"
-"POT-Creation-Date: 2021-05-06 11:41+0200\n"
-"PO-Revision-Date: 2021-05-06 11:41+0200\n"
+"POT-Creation-Date: 2021-06-30 00:23+0200\n"
+"PO-Revision-Date: 2021-06-30 00:24+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -20,47 +20,73 @@ msgstr ""
 "_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
+"X-Poedit-SearchPathExcluded-1: node_modules\n"
 
-#: rather-simple-infinite-latest-posts.php:37
+#: rather-simple-infinite-latest-posts.php:40
 msgid "Your site&#8217;s most recent Posts."
 msgstr ""
 
-#: rather-simple-infinite-latest-posts.php:40
-#: rather-simple-infinite-latest-posts.php:164
+#: rather-simple-infinite-latest-posts.php:43
+#: rather-simple-infinite-latest-posts.php:198
 msgid "Infinite Latest Posts"
 msgstr ""
 
-#: rather-simple-infinite-latest-posts.php:136
+#: rather-simple-infinite-latest-posts.php:142
 msgid "Edit"
 msgstr ""
 
-#: rather-simple-infinite-latest-posts.php:188
+#: rather-simple-infinite-latest-posts.php:221
 msgid "Load More"
 msgstr "Cargar más"
 
-#: rather-simple-infinite-latest-posts.php:227
+#: rather-simple-infinite-latest-posts.php:258
 msgid "Title:"
-msgstr ""
+msgstr "Titulo:"
 
-#: rather-simple-infinite-latest-posts.php:232
+#: rather-simple-infinite-latest-posts.php:263
+msgid "Number of posts to show:"
+msgstr "Número de entradas a mostrar:"
+
+#: rather-simple-infinite-latest-posts.php:268
 msgid "Category:"
 msgstr "Categoría:"
 
-#: rather-simple-infinite-latest-posts.php:233
+#: rather-simple-infinite-latest-posts.php:269
 msgid "All Categories"
 msgstr "Todas las categorías"
 
-#: rather-simple-infinite-latest-posts.php:237
-msgid "Number of posts to show:"
-msgstr ""
-
-#: rather-simple-infinite-latest-posts.php:243
-msgid "Display post date?"
-msgstr ""
-
 #. Plugin Name of the plugin/theme
+#: src/blocks/infinite-latest-posts/index.js:25
 msgid "Rather Simple Infinite Latest Posts"
 msgstr ""
+
+#: src/blocks/infinite-latest-posts/index.js:26
+msgid "Display latest posts."
+msgstr ""
+
+#: src/blocks/infinite-latest-posts/index.js:29
+msgid "posts"
+msgstr ""
+
+#: src/blocks/infinite-latest-posts/index.js:45
+msgid "Loading..."
+msgstr "Cargando..."
+
+#: src/blocks/infinite-latest-posts/index.js:49
+msgid "No categories found"
+msgstr "No se han encontrado categorías"
+
+#: src/blocks/infinite-latest-posts/index.js:54
+msgid "Select a category..."
+msgstr "Seleccione una categoría..."
+
+#: src/blocks/infinite-latest-posts/index.js:68
+msgid "Settings"
+msgstr "Ajustes"
+
+#: src/blocks/infinite-latest-posts/index.js:70
+msgid "Select a category:"
+msgstr "Selecciona una categoría:"
 
 #. Description of the plugin/theme
 msgid "A really simple infinite latest posts widget."

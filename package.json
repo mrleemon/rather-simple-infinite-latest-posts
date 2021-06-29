@@ -1,0 +1,25 @@
+{
+  "name": "rather-simple-infinite-latest-posts",
+  "version": "1.0.0",
+  "license": "GPL-2.0-or-later",
+  "main": "build/index.js",
+  "dependencies": {
+    "npm-check-updates": "^11.7.1"
+  },
+  "devDependencies": {
+    "@wordpress/scripts": "^16.1.4",
+    "po2json": "^1.0.0-beta-2"
+  },
+  "scripts": {
+    "build": "wp-scripts build",
+    "check-engines": "wp-scripts check-engines",
+    "check-licenses": "wp-scripts check-licenses",
+    "lint:css": "wp-scripts lint-style",
+    "lint:js": "wp-scripts lint-js",
+    "lint:pkg-json": "wp-scripts lint-pkg-json",
+    "start": "wp-scripts start",
+    "test:e2e": "wp-scripts test-e2e",
+    "test:unit": "wp-scripts test-unit-js",
+    "i18n": "po2json languages/rather-simple-infinite-latest-posts-es_ES.po languages/rather-simple-infinite-latest-posts-es_ES-rather-simple-infinite-latest-posts-block.json -f jed"
+  }
+}
