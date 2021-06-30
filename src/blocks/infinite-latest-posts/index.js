@@ -20,7 +20,7 @@ const blockAttributes = {
     },
     number: {
         type: 'integer',
-        default: 1,
+        default: 5,
     },
 };
 
@@ -91,8 +91,9 @@ export const settings = {
                     </PanelBody>    
                 </InspectorControls>
                 <ServerSideRender
-                    block={ name }
+                    block="occ/rather-simple-infinite-latest-posts"
                     attributes={ attributes }
+                    className={ className }
                 />
             </Fragment>
         );
