@@ -83,7 +83,9 @@ export const settings = {
 
     } ),
 
-    save() { },
+    save: () => {
+		return null;
+	},
 
 };
 
