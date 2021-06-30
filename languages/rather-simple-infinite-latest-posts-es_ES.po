@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Rather Simple Infinite Latest Posts\n"
-"POT-Creation-Date: 2021-06-30 00:23+0200\n"
-"PO-Revision-Date: 2021-06-30 00:24+0200\n"
+"POT-Creation-Date: 2021-06-30 18:53+0200\n"
+"PO-Revision-Date: 2021-06-30 18:54+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -22,69 +22,70 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 "X-Poedit-SearchPathExcluded-1: node_modules\n"
 
-#: rather-simple-infinite-latest-posts.php:40
+#: include/rather-simple-infinite-latest-posts-widget.php:13
 msgid "Your site&#8217;s most recent Posts."
 msgstr ""
 
-#: rather-simple-infinite-latest-posts.php:43
-#: rather-simple-infinite-latest-posts.php:198
+#: include/rather-simple-infinite-latest-posts-widget.php:17
+#: include/rather-simple-infinite-latest-posts-widget.php:36
 msgid "Infinite Latest Posts"
 msgstr ""
 
-#: rather-simple-infinite-latest-posts.php:142
-msgid "Edit"
-msgstr ""
-
-#: rather-simple-infinite-latest-posts.php:221
+#: include/rather-simple-infinite-latest-posts-widget.php:59
 msgid "Load More"
 msgstr "Cargar más"
 
-#: rather-simple-infinite-latest-posts.php:258
+#: include/rather-simple-infinite-latest-posts-widget.php:96
 msgid "Title:"
 msgstr "Titulo:"
 
-#: rather-simple-infinite-latest-posts.php:263
+#: include/rather-simple-infinite-latest-posts-widget.php:101
+#: src/blocks/infinite-latest-posts/index.js:85
 msgid "Number of posts to show:"
 msgstr "Número de entradas a mostrar:"
 
-#: rather-simple-infinite-latest-posts.php:268
+#: include/rather-simple-infinite-latest-posts-widget.php:106
 msgid "Category:"
 msgstr "Categoría:"
 
-#: rather-simple-infinite-latest-posts.php:269
+#: include/rather-simple-infinite-latest-posts-widget.php:107
 msgid "All Categories"
 msgstr "Todas las categorías"
 
+#: rather-simple-infinite-latest-posts.php:191
+msgid "Edit"
+msgstr ""
+
 #. Plugin Name of the plugin/theme
-#: src/blocks/infinite-latest-posts/index.js:25
+#: src/blocks/infinite-latest-posts/index.js:30
 msgid "Rather Simple Infinite Latest Posts"
 msgstr ""
 
-#: src/blocks/infinite-latest-posts/index.js:26
+#: src/blocks/infinite-latest-posts/index.js:31
 msgid "Display latest posts."
 msgstr ""
 
-#: src/blocks/infinite-latest-posts/index.js:29
+#: src/blocks/infinite-latest-posts/index.js:34
 msgid "posts"
 msgstr ""
 
-#: src/blocks/infinite-latest-posts/index.js:45
+#: src/blocks/infinite-latest-posts/index.js:54
 msgid "Loading..."
 msgstr "Cargando..."
 
-#: src/blocks/infinite-latest-posts/index.js:49
+#: src/blocks/infinite-latest-posts/index.js:58
 msgid "No categories found"
 msgstr "No se han encontrado categorías"
 
-#: src/blocks/infinite-latest-posts/index.js:54
+#: src/blocks/infinite-latest-posts/index.js:63
 msgid "Select a category..."
 msgstr "Seleccione una categoría..."
 
-#: src/blocks/infinite-latest-posts/index.js:68
+#: src/blocks/infinite-latest-posts/index.js:77
 msgid "Settings"
 msgstr "Ajustes"
 
-#: src/blocks/infinite-latest-posts/index.js:70
+#: src/blocks/infinite-latest-posts/index.js:79
 msgid "Select a category:"
 msgstr "Selecciona una categoría:"
 
@@ -99,3 +100,8 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://oscarciutat.com/code/"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Number of posts to show:"
+#~ msgid "Number of posts:"
+#~ msgstr "Número de entradas a mostrar:"

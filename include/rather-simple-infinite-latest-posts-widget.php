@@ -16,7 +16,6 @@ class Rather_Simple_Infinite_Latest_Posts_Widget extends WP_Widget {
 		);
 		parent::__construct( 'infinite-latest-posts', __( 'Infinite Latest Posts', 'rather-simple-infinite-latest-posts' ), $widget_ops );
 		//$this->alt_option_name = 'widget_infinite_latest_posts';
-        
 	}
 
     /**

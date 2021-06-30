@@ -265,7 +265,7 @@ class Rather_Simple_Infinite_Latest_Posts {
             filemtime( plugin_dir_path( __FILE__ ) . 'build/index.js' )
         );
 
-        register_block_type( 'occ/infinite-latest-posts', array(
+        register_block_type( 'occ/rather-simple-infinite-latest-posts', array(
             'style'           => 'rather-simple-infinite-latest-posts-frontend',
             'editor_script'   => 'rather-simple-infinite-latest-posts-block',
             'render_callback' => array( $this, 'render_block' ),
@@ -291,61 +291,11 @@ class Rather_Simple_Infinite_Latest_Posts {
     public function render_block( $attr, $content ) {
         $html = '';
 
-        $term_id = get_queried_object()->term_id;
-        $term = get_term( $term_id, 'product_cat' );
+        $category = $attr['category'];
+		$number = $attr['number'];
 
-       /* if ( $term && !is_wp_error( $term ) ) {
-                    
-            if ( $attr['dropdown'] ) {
-
-                if ( $term->parent > 0 ) { 
-                    $args = array(
-                        'orderby'       => 'name', 
-                        'order'         => 'ASC',
-                        'hide_empty'    => true, 
-                        'child_of'      => $term->parent,
-                        'show_count'    => $attr['count'] ? 1 : 0,
-                        'selected'      => $term ? $term->slug : ''
-                    ); 
-                
-                } else {
-                    $args = array(
-                        'orderby'       => 'name', 
-                        'order'         => 'ASC',
-                        'hide_empty'    => true, 
-                        'child_of'      => $term_id,
-                        'show_count'    => $attr['count'] ? 1 : 0,
-                        'selected'      => $term ? $term->slug : ''
-                    );
-                }
-                
-                $current_product_cat = isset( $wp_query->query_vars['product_cat'] ) ? $wp_query->query_vars['product_cat'] : '';
-                $terms = get_terms( 'product_cat', $args );
-                
-                $output  = "<select name='product_cat' class='dropdown_product_cat'>";
-                $output .= '<option value="" ' . selected( $term_id, '', false ) . '>' . __( 'Select a category', 'woocommerce' ) . '</option>';
-                $output .= wc_walk_category_dropdown_tree( $terms, 0, $args );
-                $output .= "</select>";
-
-                $html .= $output;
-                
-                wc_enqueue_js( "
-                    jQuery( '.dropdown_product_cat' ).on( 'change', function() {
-                        if ( jQuery( this ).val() != '' ) {
-                            var this_page = '';
-                            var home_url  = '" . esc_js( home_url( '/' ) ) . "';
-                            if ( home_url.indexOf( '?' ) > 0 ) {
-                                this_page = home_url + '&product_cat=' + jQuery( this ).val();
-                            } else {
-                                this_page = home_url + '?product_cat=' + jQuery( this ).val();
-                            }
-                            location.href = this_page;
-                        }
-                    });
-                " );
-
-        }
-            */
+        $html = '<div class="infinite-posts"></div>
+        <input type="button" class="load-more" value="' . _e( 'Load More', 'rather-simple-infinite-latest-posts' ) . '" data-category="' . esc_attr( $category ) . '" data-number="' . esc_attr( $number ) . '" data-offset="' . esc_attr( $number ) . '" data-total="' . esc_attr( $number ) . '" />';
 
         return $html;
     }

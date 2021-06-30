@@ -2,9 +2,10 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
+import { Fragment } from '@wordpress/element';
 import { registerBlockType } from '@wordpress/blocks';
 import { InspectorControls } from '@wordpress/block-editor';
-import { G, Path, SVG, PanelBody, Placeholder, SelectControl } from '@wordpress/components';
+import { G, Path, SVG, PanelBody, Placeholder, SelectControl, RangeControl } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import ServerSideRender from '@wordpress/server-side-render';
 
@@ -13,9 +14,13 @@ import ServerSideRender from '@wordpress/server-side-render';
  */
 
 const blockAttributes = {
-    id: {
+    category: {
         type: 'integer',
         default: 0,
+    },
+    number: {
+        type: 'integer',
+        default: 1,
     },
 };
 
@@ -37,8 +42,12 @@ export const settings = {
             []
         );
 
-        const setID = value => {
-            props.setAttributes( { id: Number( value ) } );
+        const setCategory = value => {
+            props.setAttributes( { category: Number( value ) } );
+        };
+
+        const setNumber = value => {
+            props.setAttributes( { number: Number( value ) } );
         };
 
         if ( ! categories ) {
@@ -68,9 +77,16 @@ export const settings = {
                     <PanelBody title={ __( 'Settings', 'rather-simple-infinite-latest-posts' ) } initialOpen={ false }>
                         <SelectControl
                             label={ __( 'Select a category:', 'rather-simple-infinite-latest-posts' ) }
-                            value={ attributes.id }
+                            value={ attributes.category }
                             options={ options }
-                            onChange={ setID }
+                            onChange={ setCategory }
+                        />
+                        <RangeControl
+                            label={ __( 'Number of posts to show:', 'rather-simple-infinite-latest-posts' ) }
+                            value={ attributes.number }
+                            onChange={ setNumber }
+                            min={ 1 }
+                            max={ 50 }
                         />
                     </PanelBody>    
                 </InspectorControls>
