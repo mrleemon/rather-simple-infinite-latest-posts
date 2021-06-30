@@ -26,27 +26,76 @@ License: GPLv2 or later
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
+class Rather_Simple_Infinite_Latest_Posts {
+
+    /**
+     * Plugin instance.
+     *
+     * @since 1.0
+     *
+     */
+    protected static $instance = null;
     
-	/**
-	 * Sets up a new Infinite Latest Posts widget instance.
-	 *
-	 * @since 2.8.0
-	 */
-	public function __construct() {
-        load_plugin_textdomain( 'rather-simple-infinite-latest-posts', '', dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-		$widget_ops = array(
-			'classname'                   => 'widget_infinite_latest_posts',
-			'description'                 => __( 'Your site&#8217;s most recent Posts.' ),
-			'customize_selective_refresh' => true,
-		);
-		parent::__construct( 'infinite-latest-posts', __( 'Infinite Latest Posts', 'rather-simple-infinite-latest-posts' ), $widget_ops );
-		$this->alt_option_name = 'widget_infinite_latest_posts';
+    /**
+     * Access this plugin’s working instance
+     *
+     * @since 1.0
+     *
+     */
+    public static function get_instance() {
         
-        add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-        add_action( 'rest_api_init', array( $this, 'rest_api_init' ) );
+        if ( !self::$instance ) {
+            self::$instance = new self;
+        }
+
+        return self::$instance;
+
+    }
     
-	}
+    /**
+     * Used for regular plugin work.
+     *
+     * @since 1.0
+     *
+     */
+    public function plugin_setup() {
+
+        $this->includes();
+
+        add_action( 'init', array( $this, 'load_language' ) );
+        add_action( 'init', array( $this, 'register_block' ) );
+        add_action( 'rest_api_init', array( $this, 'rest_api_init' ) );
+        add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+
+    }
+   
+    /**
+     * Constructor. Intentionally left empty and public.
+     *
+     * @since 1.0
+     *
+     */
+    public function __construct() {}
+    
+    /**
+     * Includes required core files used in admin and on the frontend.
+     *
+     * @since 1.0
+     *
+     */
+    protected function includes() {
+        require_once 'include/rather-simple-infinite-latest-posts-widget.php';
+    }
+    
+    /**
+     * Loads language
+     *
+     * @since 1.0
+     *
+     */
+    public function load_language() {
+        load_plugin_textdomain( 'rather-simple-infinite-latest-posts', '', dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+    }
 
     /**
 	 * Enqueue scripts and styles
@@ -182,95 +231,125 @@ class Rather_Simple_Infinite_Latest_Posts extends WP_Widget {
     }
 
     /**
-	 * Outputs the content for the current Recent Posts widget instance.
-	 *
-	 * @since 2.8.0
-	 *
-	 * @param array $args     Display arguments including 'before_title', 'after_title',
-	 *                        'before_widget', and 'after_widget'.
-	 * @param array $instance Settings for the current Recent Posts widget instance.
-	 */
-	public function widget( $args, $instance ) {
-		if ( ! isset( $args['widget_id'] ) ) {
-			$args['widget_id'] = $this->id;
-		}
+     * Registers block
+     *
+     * @since 1.0
+     *
+     */
+    public function register_block() {
 
-		$default_title = __( 'Infinite Latest Posts', 'rather-simple-infinite-latest-posts' );
-		$title         = ( ! empty( $instance['title'] ) ) ? $instance['title'] : $default_title;
+        if ( ! function_exists( 'register_block_type' ) ) {
+            // The block editor is not active.
+            return;
+        }
 
-		/** This filter is documented in wp-includes/widgets/class-wp-widget-pages.php */
-		$title = apply_filters( 'widget_title', $title, $instance, $this->id_base );
+        $dir = dirname( __FILE__ );
+        $script_asset_path = "$dir/build/index.asset.php";
+        if ( ! file_exists( $script_asset_path ) ) {
+            throw new Error(
+                'You need to run `npm start` or `npm run build` for the block first.'
+            );
+        }
+        $script_asset = require( $script_asset_path );
+        
+        wp_register_style(
+            'rather-simple-infinite-latest-posts-frontend',
+            plugins_url( 'build/style-index.css', __FILE__ ),
+            array(),
+            filemtime( plugin_dir_path( __FILE__ ) . 'build/style-index.css' )
+        );
+        wp_register_script(
+            'rather-simple-infinite-latest-posts-block',
+            plugins_url( 'build/index.js', __FILE__ ),
+            $script_asset['dependencies'],
+            filemtime( plugin_dir_path( __FILE__ ) . 'build/index.js' )
+        );
 
-        $category = ( ! empty( $instance['category'] ) ) ? absint( $instance['category'] ) : 0;
+        register_block_type( 'occ/infinite-latest-posts', array(
+            'style'           => 'rather-simple-infinite-latest-posts-frontend',
+            'editor_script'   => 'rather-simple-infinite-latest-posts-block',
+            'render_callback' => array( $this, 'render_block' ),
+            'attributes' => array(
+                'category' => array(
+                    'type'    => 'integer',
+                    'default' => 0,
+                ),
+                'number' => array(
+                    'type'    => 'integer',
+                    'default' => 5,
+                ),
+            ),
+        ) );
 
-		$number = ( ! empty( $instance['number'] ) ) ? absint( $instance['number'] ) : 5;
-		if ( ! $number ) {
-			$number = 5;
-		}
+        wp_set_script_translations( 'rather-simple-infinite-latest-posts-block', 'rather-simple-infinite-latest-posts', plugin_dir_path( __FILE__ ) . 'languages' );
 
-		echo $args['before_widget']; ?>
+    }
 
-		<?php
-		if ( $title ) {
-			echo $args['before_title'] . $title . $args['after_title'];
-		}
-		?>
+    /**
+     * render_block
+     */
+    public function render_block( $attr, $content ) {
+        $html = '';
 
-        <div class="infinite-posts"></div>
+        $term_id = get_queried_object()->term_id;
+        $term = get_term( $term_id, 'product_cat' );
 
-        <input type="button" class="load-more" value="<?php _e( 'Load More', 'rather-simple-infinite-latest-posts' ); ?>" data-category="<?php echo esc_attr( $category ); ?>" data-number="<?php echo esc_attr( $number ); ?>" data-offset="<?php echo esc_attr( $number ); ?>" data-total="<?php echo esc_attr( $number ); ?>" />
+       /* if ( $term && !is_wp_error( $term ) ) {
+                    
+            if ( $attr['dropdown'] ) {
 
-        <?php
-		echo $args['after_widget'];
-	}
+                if ( $term->parent > 0 ) { 
+                    $args = array(
+                        'orderby'       => 'name', 
+                        'order'         => 'ASC',
+                        'hide_empty'    => true, 
+                        'child_of'      => $term->parent,
+                        'show_count'    => $attr['count'] ? 1 : 0,
+                        'selected'      => $term ? $term->slug : ''
+                    ); 
+                
+                } else {
+                    $args = array(
+                        'orderby'       => 'name', 
+                        'order'         => 'ASC',
+                        'hide_empty'    => true, 
+                        'child_of'      => $term_id,
+                        'show_count'    => $attr['count'] ? 1 : 0,
+                        'selected'      => $term ? $term->slug : ''
+                    );
+                }
+                
+                $current_product_cat = isset( $wp_query->query_vars['product_cat'] ) ? $wp_query->query_vars['product_cat'] : '';
+                $terms = get_terms( 'product_cat', $args );
+                
+                $output  = "<select name='product_cat' class='dropdown_product_cat'>";
+                $output .= '<option value="" ' . selected( $term_id, '', false ) . '>' . __( 'Select a category', 'woocommerce' ) . '</option>';
+                $output .= wc_walk_category_dropdown_tree( $terms, 0, $args );
+                $output .= "</select>";
 
-	/**
-	 * Handles updating the settings for the current Recent Posts widget instance.
-	 *
-	 * @since 2.8.0
-	 *
-	 * @param array $new_instance New settings for this instance as input by the user via
-	 *                            WP_Widget::form().
-	 * @param array $old_instance Old settings for this instance.
-	 * @return array Updated settings to save.
-	 */
-	public function update( $new_instance, $old_instance ) {
-		$instance              = $old_instance;
-		$instance['title']     = sanitize_text_field( $new_instance['title'] );
-		$instance['number']    = (int) $new_instance['number'];
-        $instance['category']  = (int) $new_instance['category'];
-		return $instance;
-	}
+                $html .= $output;
+                
+                wc_enqueue_js( "
+                    jQuery( '.dropdown_product_cat' ).on( 'change', function() {
+                        if ( jQuery( this ).val() != '' ) {
+                            var this_page = '';
+                            var home_url  = '" . esc_js( home_url( '/' ) ) . "';
+                            if ( home_url.indexOf( '?' ) > 0 ) {
+                                this_page = home_url + '&product_cat=' + jQuery( this ).val();
+                            } else {
+                                this_page = home_url + '?product_cat=' + jQuery( this ).val();
+                            }
+                            location.href = this_page;
+                        }
+                    });
+                " );
 
-	/**
-	 * Outputs the settings form for the Recent Posts widget.
-	 *
-	 * @since 2.8.0
-	 *
-	 * @param array $instance Current settings.
-	 */
-	public function form( $instance ) {
-		$title     = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
-        $category  = isset( $instance['category'] ) ? absint( $instance['category'] ) : 0;
-		$number    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
-		?>
-		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label>
-			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" />
-		</p>
+        }
+            */
 
-		<p>
-			<label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of posts to show:' ); ?></label>
-			<input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1" value="<?php echo $number; ?>" size="3" />
-		</p>
+        return $html;
+    }
 
-        <p>
-            <label for="<?php echo $this->get_field_id( 'category' ); ?>"><?php _e( 'Category:', 'rather-simple-infinite-latest-posts' ); ?></label>
-            <?php wp_dropdown_categories( array( 'show_option_all' => __( 'All Categories', 'rather-simple-infinite-latest-posts' ), 'name' => $this->get_field_name( 'category' ), 'selected' => $category, 'hide_empty' => 0 ) ); ?>
-        </p>
-
-		<?php
-	}
 }
 
-add_action( 'widgets_init', function() { return register_widget( 'Rather_Simple_Infinite_Latest_Posts' ); } );
+add_action( 'plugins_loaded', array( Rather_Simple_Infinite_Latest_Posts::get_instance(), 'plugin_setup' ) );
