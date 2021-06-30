@@ -76,10 +76,7 @@ export const settings = {
                 </InspectorControls>
                 <ServerSideRender
                     block={ name }
-                    attributes={ {
-                        category: true,
-                        number: false,
-                    } }
+                    attributes={ attributes }
                 />
             </Fragment>
         );
