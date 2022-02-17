@@ -152,6 +152,7 @@ class Rather_Simple_Infinite_Latest_Posts {
 	 *
 	 */
     function load_posts_rest( WP_REST_Request $request ) {
+        //$nonce = $request->get_header( 'x_wp_nonce' );
         $category = $request['category'];
         $number = $request['number'];
         $offset = $request['offset'];
