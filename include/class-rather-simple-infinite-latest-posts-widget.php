@@ -60,7 +60,7 @@ class Rather_Simple_Infinite_Latest_Posts_Widget extends WP_Widget {
 
 		<div class="infinite-posts"></div>
 
-		<input type="button" class="load-more" value="<?php _e( 'Load More', 'rather-simple-infinite-latest-posts' ); ?>" data-category="<?php echo esc_attr( $category ); ?>" data-number="<?php echo esc_attr( $number ); ?>" data-offset="<?php echo esc_attr( $number ); ?>" data-total="<?php echo esc_attr( $number ); ?>" />
+		<input type="button" class="load-more" value="<?php esc_attr_e( 'Load More', 'rather-simple-infinite-latest-posts' ); ?>" data-category="<?php echo esc_attr( $category ); ?>" data-number="<?php echo esc_attr( $number ); ?>" data-offset="<?php echo esc_attr( $number ); ?>" data-total="<?php echo esc_attr( $number ); ?>" />
 
 		<?php
 		echo $args['after_widget'];
