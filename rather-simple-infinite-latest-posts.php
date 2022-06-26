@@ -91,10 +91,22 @@ class Rather_Simple_Infinite_Latest_Posts {
 	 */
 	public function enqueue_scripts() {
 		// Load styles.
-		wp_enqueue_style( 'rsilp-style', plugins_url( 'style.css', __FILE__ ) );
+		wp_enqueue_style(
+			'rsilp-style',
+			plugins_url( 'style.css', __FILE__ ),
+			array(),
+			filemtime( plugin_dir_path( __FILE__ ) . '/style.css' )
+		);
 
 		// Load scripts.
-		wp_enqueue_script( 'rsilp-script', plugins_url( '/assets/js/frontend.js', __FILE__ ), array( 'jquery' ), false, true );
+		wp_enqueue_script(
+			'rsilp-script',
+			plugins_url( '/assets/js/frontend.js', __FILE__ ),
+			array( 'jquery' ),
+			filemtime( plugin_dir_path( __FILE__ ) . '/assets/js/frontend.js' ),
+			true
+		);
+
 		wp_localize_script(
 			'rsilp-script',
 			'rsilp_params_rest',
