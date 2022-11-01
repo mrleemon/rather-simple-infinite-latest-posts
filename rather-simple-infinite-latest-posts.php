@@ -4,12 +4,12 @@
  * Plugin URI:
  * Update URI: false
  * Version: 1.0
- * Requires at least: 5.0
+ * Requires at least: 5.8
  * Requires PHP: 7.0
  * Author: Oscar Ciutat
  * Author URI: http://oscarciutat.com/code/
  * Text Domain: rather-simple-infinite-latest-posts
- * Description: A really simple infinite latest posts widget.
+ * Description: A really simple infinite latest posts widget and block.
  * License: GPLv2 or later
  *
  * This program is free software; you can redistribute it and/or modify
@@ -246,60 +246,24 @@ class Rather_Simple_Infinite_Latest_Posts {
 
 	/**
 	 * Registers block
-	 *
-	 * @throws Error If block is not built.
 	 */
 	public function register_block() {
-
 		if ( ! function_exists( 'register_block_type' ) ) {
 			// The block editor is not active.
 			return;
 		}
 
-		$dir               = dirname( __FILE__ );
-		$script_asset_path = "$dir/build/index.asset.php";
-		if ( ! file_exists( $script_asset_path ) ) {
-			throw new Error(
-				'You need to run `npm start` or `npm run build` for the block first.'
-			);
-		}
-		$script_asset = require $script_asset_path;
-
-		wp_register_style(
-			'rather-simple-infinite-latest-posts-frontend',
-			plugins_url( 'build/style-index.css', __FILE__ ),
-			array(),
-			filemtime( plugin_dir_path( __FILE__ ) . 'build/style-index.css' )
-		);
-		wp_register_script(
-			'rather-simple-infinite-latest-posts-block',
-			plugins_url( 'build/index.js', __FILE__ ),
-			$script_asset['dependencies'],
-			filemtime( plugin_dir_path( __FILE__ ) . 'build/index.js' ),
-			true
-		);
-
+		// Register the block by passing the location of block.json to register_block_type.
 		register_block_type(
-			'occ/rather-simple-infinite-latest-posts',
+			__DIR__ . '/build/blocks/infinite-latest-posts',
 			array(
-				'style'           => 'rather-simple-infinite-latest-posts-frontend',
-				'editor_script'   => 'rather-simple-infinite-latest-posts-block',
 				'render_callback' => array( $this, 'render_block' ),
-				'attributes'      => array(
-					'category' => array(
-						'type'    => 'integer',
-						'default' => 0,
-					),
-					'number'   => array(
-						'type'    => 'integer',
-						'default' => 5,
-					),
-				),
 			)
 		);
 
-		wp_set_script_translations( 'rather-simple-infinite-latest-posts-block', 'rather-simple-infinite-latest-posts', plugin_dir_path( __FILE__ ) . 'languages' );
-
+		// Load translations.
+		$script_handle = generate_block_asset_handle( 'occ/rather-simple-infinite-latest-posts', 'editorScript' );
+		wp_set_script_translations( $script_handle, 'rather-simple-infinite-latest-posts', plugin_dir_path( __FILE__ ) . 'languages' );
 	}
 
 	/**

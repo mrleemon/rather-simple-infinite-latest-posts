@@ -5,9 +5,15 @@ import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import { registerBlockType } from '@wordpress/blocks';
 import { InspectorControls } from '@wordpress/block-editor';
-import { G, Path, SVG, PanelBody, Placeholder, SelectControl, RangeControl } from '@wordpress/components';
+import { G, Path, SVG, PanelBody, SelectControl, RangeControl } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 import ServerSideRender from '@wordpress/server-side-render';
+import metadata from "./block.json";
+
+import './editor.scss';
+import './style.scss';
+
+const { name } = metadata;
 
 /**
  * Internal dependencies
@@ -24,15 +30,7 @@ const blockAttributes = {
     },
 };
 
-export const name = 'occ/rather-simple-infinite-latest-posts';
-
 export const settings = {
-    title: __( 'Rather Simple Infinite Latest Posts', 'rather-simple-infinite-latest-posts' ),
-    description: __( 'Display latest posts.', 'rather-simple-infinite-latest-posts' ),
-    icon: <SVG viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><Path fill="none" d="M0 0h24v24H0V0z" /><G><Path d="M20 4v12H8V4h12m0-2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 9.67l1.69 2.26 2.48-3.1L19 15H9zM2 6v14c0 1.1.9 2 2 2h14v-2H4V6H2z" /></G></SVG>,
-    category: 'common',
-    keywords: [ __( 'posts', 'rather-simple-infinite-latest-posts' ) ],
-    attributes: blockAttributes,
 
     edit: ( props => {
         const { attributes, className } = props;
