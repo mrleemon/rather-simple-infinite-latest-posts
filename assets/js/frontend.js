@@ -77,7 +77,7 @@
                 method: 'GET',
                 cache: true,
                 beforeSend: function ( xhr ) {
-                    xhr.setRequestHeader( 'X-WP-Nounce', rsilp_params_rest.rest_nonce )
+                    xhr.setRequestHeader( 'X-WP-Nonce', rsilp_params_rest.rest_nonce )
                 },
                 data: {
                     category: $this.attr( 'data-category' ),
