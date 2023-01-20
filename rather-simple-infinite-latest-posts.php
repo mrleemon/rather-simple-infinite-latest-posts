@@ -102,7 +102,7 @@ class Rather_Simple_Infinite_Latest_Posts {
 		wp_enqueue_script(
 			'rsilp-script',
 			plugins_url( '/assets/js/frontend.js', __FILE__ ),
-			array( 'jquery' ),
+			array(),
 			filemtime( plugin_dir_path( __FILE__ ) . '/assets/js/frontend.js' ),
 			true
 		);
