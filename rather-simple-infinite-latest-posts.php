@@ -202,7 +202,8 @@ class Rather_Simple_Infinite_Latest_Posts {
 				$query->the_post();
 				$content        = apply_filters( 'the_content', get_the_content() );
 				$content        = str_replace( ']]>', ']]&gt;', $content );
-				$post_edit_link = get_edit_post_link() ? '<span class="edit-link"><a class="post-edit-link" href="' . esc_url( get_edit_post_link() ) . '">' . __( 'Edit', 'rather-simple-infinite-latest-posts' ) . '</a></span>' : '';
+				$post_edit_link = get_edit_post_link() ? '<a class="post-edit-link" href="' . esc_url( get_edit_post_link() ) . '">' . __( 'Edit', 'rather-simple-infinite-latest-posts' ) . '</a>' : '';
+				$post_edit_link = apply_filters( 'edit_post_link', $post_edit_link, get_the_ID(), __( 'Edit', 'rather-simple-infinite-latest-posts' ) );
 				$data[]         = array(
 					'ID'             => get_the_ID(),
 					'post_title'     => get_the_title(),
