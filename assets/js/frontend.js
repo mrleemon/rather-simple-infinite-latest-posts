@@ -38,7 +38,9 @@
 					html += '<h2 class="entry-title">' + post.post_title + '</h2>';
 					html += '</header>';
 					html += '<div class="entry-content">' + post.post_content + '</div>';
-					html += '<div class="entry-footer"><span class="edit-link">' + post.post_edit_link + '</span></div>';
+					if ( post.post_edit_link ) {
+						html += '<div class="entry-footer"><span class="edit-link">' + post.post_edit_link + '</span></div>';
+					}
 					html += '</article>';
 				}
 				document.querySelector('.widget_infinite_latest_posts .infinite-posts').insertAdjacentHTML('beforeend', html);
@@ -85,7 +87,9 @@
 						html += '<h2 class="entry-title">' + post.post_title + '</h2>';
 						html += '</header>';
 						html += '<div class="entry-content">' + post.post_content + '</div>';
-						html += '<div class="entry-footer"><span class="edit-link">' + post.post_edit_link + '</span></div>';
+						if ( post.post_edit_link ) {
+							html += '<div class="entry-footer"><span class="edit-link">' + post.post_edit_link + '</span></div>';
+						}
 						html += '</article>';
 					}
 					document.querySelector('.widget_infinite_latest_posts .infinite-posts').insertAdjacentHTML('beforeend', html);
