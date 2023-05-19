@@ -3,25 +3,25 @@
 	"apiVersion": 2,
 	"name": "occ/rather-simple-infinite-latest-posts",
 	"title": "Rather Simple Infinite Latest Posts",
-    "description": "Display latest posts.",
+	"description": "Display latest posts.",
 	"textdomain": "rather-simple-infinite-latest-posts",
 	"category": "common",
-    "attributes": {
-        "category": {
-            "type": "integer",
+	"attributes": {
+		"category": {
+			"type": "integer",
 			"default": 0
-        },
-        "number": {
-            "type": "integer",
+		},
+		"number": {
+			"type": "integer",
 			"default": 5
-        }
-    },
+		}
+	},
 	"supports": {
 		"spacing": {
 			"margin": true,
 			"padding": true
 		}
 	},
-    "editorScript": "file:./index.js",
-    "style": "file:./style-index.css"
+	"editorScript": "file:./index.js",
+	"style": "file:./style-index.css"
 }
