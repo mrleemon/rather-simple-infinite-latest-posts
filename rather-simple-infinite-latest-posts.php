@@ -64,6 +64,7 @@ class Rather_Simple_Infinite_Latest_Posts {
 		add_action( 'init', array( $this, 'register_block' ) );
 		add_action( 'rest_api_init', array( $this, 'rest_api_init' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_assets' ) );
 
 	}
 
@@ -116,6 +117,22 @@ class Rather_Simple_Infinite_Latest_Posts {
 			)
 		);
 	}
+
+	/**
+	 * Enqueue block assets
+	 */
+	public function enqueue_block_assets() {
+		$script_handle = generate_block_asset_handle( 'occ/rather-simple-infinite-latest-posts', 'viewScript' );
+		wp_localize_script(
+			$script_handle,
+			'rsilp_params_rest',
+			array(
+				'rest_url'   => rest_url(),
+				'rest_nonce' => wp_create_nonce( 'wp_rest' ),
+			)
+		);
+	}
+
 
 	/**
 	 * Register REST route
