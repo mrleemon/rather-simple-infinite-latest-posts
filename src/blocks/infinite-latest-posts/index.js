@@ -96,7 +96,7 @@ export const settings = {
 			return (
 				posts.map((post, index) => {
 					return (
-						<article id={`post-${post.id}`} className="post" key={index}>
+						<article id={`post-${post.id}`} className="wp-block-occ-rather-simple-infinite-latest-posts__post" key={index}>
 							<h2 className="wp-block-occ-rather-simple-infinite-latest-posts__post-title">
                             {
 								post.title.rendered ?
