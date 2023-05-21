@@ -32,7 +32,10 @@ export const settings = {
 
 	edit: (props => {
 		const blockProps = useBlockProps();
-		const { attributes, className } = props;
+		const {
+			attributes: { category, number },
+			setAttributes,
+		} = props;
 
 		const categories = useSelect(
 			(select) => select('core').getEntityRecords('taxonomy', 'category', {
@@ -46,18 +49,18 @@ export const settings = {
 				order: 'desc',
 				orderby: 'date',
 				status: 'publish',
-				categories: attributes.category ? attributes.category : [],
-				per_page: attributes.number
+				categories: category ? category : [],
+				per_page: number
 			}),
-			[attributes.category, attributes.number]
+			[category, number]
 		);
 
 		const setCategory = value => {
-			props.setAttributes({ category: parseInt(value) });
+			setAttributes({ category: parseInt(value) });
 		};
 
 		const setNumber = value => {
-			props.setAttributes({ number: parseInt(value) });
+			setAttributes({ number: parseInt(value) });
 		};
 
 		if (!categories) {
@@ -114,13 +117,13 @@ export const settings = {
 					<PanelBody title={__('Settings', 'rather-simple-infinite-latest-posts')}>
 						<SelectControl
 							label={__('Select a category:', 'rather-simple-infinite-latest-posts')}
-							value={attributes.category}
+							value={category}
 							options={options}
 							onChange={setCategory}
 						/>
 						<RangeControl
 							label={__('Number of posts to show:', 'rather-simple-infinite-latest-posts')}
-							value={attributes.number}
+							value={number}
 							onChange={setNumber}
 							min={1}
 							max={20}
