@@ -130,7 +130,7 @@ export const settings = {
 				{posts.length &&
 					<div {...blockProps}>
 						{displayPosts(posts)}
-						<input type="button" class="wp-element-button" value="Load More" />
+						<input type="button" class="wp-element-button" value={__('Load More', 'rather-simple-infinite-latest-posts')} disabled />
 					</div>
 				}
 			</Fragment>
