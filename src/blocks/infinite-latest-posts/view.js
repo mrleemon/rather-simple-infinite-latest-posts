@@ -33,11 +33,11 @@
 				var numposts = result.numposts;
 				for (var i = 0; i < posts.length; i++) {
 					var post = posts[i];
-					html += '<article id="post-' + post.ID + '" class="post">';
+					html += '<article id="post-' + post.ID + '" class="wp-block-occ-rather-simple-infinite-latest-posts__post">';
 					html += '<h2 class="wp-block-occ-rather-simple-infinite-latest-posts__post-title">' + post.post_title + '</h2>';
 					html += '<div class="wp-block-occ-rather-simple-infinite-latest-posts__post-content">' + post.post_content + '</div>';
 					if ( post.post_edit_link ) {
-						html += '<div class="entry-footer"><span class="edit-link">' + post.post_edit_link + '</span></div>';
+						html += '<div class="wp-block-occ-rather-simple-infinite-latest-posts__post-meta"><span class="edit-link">' + post.post_edit_link + '</span></div>';
 					}
 					html += '</article>';
 				}
@@ -80,11 +80,11 @@
 					var numposts = result.numposts;
 					for (var i = 0; i < posts.length; i++) {
 						var post = posts[i];
-						html += '<article id="post-' + post.ID + '" class="post">';
+						html += '<article id="post-' + post.ID + '" class="wp-block-occ-rather-simple-infinite-latest-posts__post">';
 						html += '<h2 class="wp-block-occ-rather-simple-infinite-latest-posts__post-title">' + post.post_title + '</h2>';
 						html += '<div class="wp-block-occ-rather-simple-infinite-latest-posts__post-content">' + post.post_content + '</div>';
 						if ( post.post_edit_link ) {
-							html += '<div class="entry-footer"><span class="edit-link">' + post.post_edit_link + '</span></div>';
+							html += '<div class="wp-block-occ-rather-simple-infinite-latest-posts__post-meta"><span class="edit-link">' + post.post_edit_link + '</span></div>';
 						}
 						html += '</article>';
 					}
