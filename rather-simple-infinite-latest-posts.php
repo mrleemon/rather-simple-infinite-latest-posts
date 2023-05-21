@@ -282,8 +282,10 @@ class Rather_Simple_Infinite_Latest_Posts {
 		$category = $attr['category'];
 		$number   = $attr['number'];
 
-		$html = '<div class="widget widget_infinite_latest_posts"><div class="infinite-posts"></div>
-        <input type="button" class="load-more wp-element-button" value="' . __( 'Load More', 'rather-simple-infinite-latest-posts' ) . '" data-category="' . esc_attr( $category ) . '" data-number="' . esc_attr( $number ) . '" data-offset="' . esc_attr( $number ) . '" data-total="' . esc_attr( $number ) . '" /></div>';
+		$html = '<div ' . wp_kses_data( get_block_wrapper_attributes() ) . '>
+		<div class="infinite-posts"></div>
+        <input type="button" class="load-more wp-element-button" value="' . __( 'Load More', 'rather-simple-infinite-latest-posts' ) . '" data-category="' . esc_attr( $category ) . '" data-number="' . esc_attr( $number ) . '" data-offset="' . esc_attr( $number ) . '" data-total="' . esc_attr( $number ) . '" />
+		</div>';
 
 		return $html;
 	}
