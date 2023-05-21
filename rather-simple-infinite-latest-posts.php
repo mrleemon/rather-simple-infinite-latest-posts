@@ -188,8 +188,8 @@ class Rather_Simple_Infinite_Latest_Posts {
 		$offset   = $request['offset'];
 		$total    = $request['total'];
 
+		// Get all posts matching the $request parameters.
 		$data = array();
-
 		$args = array(
 			'post_type'              => 'post',
 			'posts_per_page'         => $total,
@@ -212,7 +212,6 @@ class Rather_Simple_Infinite_Latest_Posts {
 			);
 		}
 
-		// Get all posts matching the $request parameters.
 		$query = new WP_Query( $args );
 		if ( $query->have_posts() ) :
 			while ( $query->have_posts() ) :
@@ -234,6 +233,7 @@ class Rather_Simple_Infinite_Latest_Posts {
 			endwhile;
 		endif;
 
+		// Get total number of posts.
 		$args = array(
 			'post_type'              => 'post',
 			'posts_per_page'         => -1,
@@ -242,7 +242,7 @@ class Rather_Simple_Infinite_Latest_Posts {
 			'update_post_meta_cache' => false,
 		);
 
-		if ( 0 !== $category ) {
+		if ( ! empty( $category ) ) {
 			$args['tax_query'] = array(
 				array(
 					'taxonomy' => 'category',
@@ -252,7 +252,6 @@ class Rather_Simple_Infinite_Latest_Posts {
 			);
 		}
 
-		// Get total number of posts.
 		$query    = new WP_Query( $args );
 		$numposts = $query->found_posts;
 
