@@ -202,7 +202,7 @@ class Rather_Simple_Infinite_Latest_Posts {
 			'update_post_meta_cache' => false,
 		);
 
-		if ( 0 !== $category ) {
+		if ( ! empty( $category ) ) {
 			$args['tax_query'] = array(
 				array(
 					'taxonomy' => 'category',
