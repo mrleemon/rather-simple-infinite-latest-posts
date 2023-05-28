@@ -42,11 +42,16 @@
 					html += '</article>';
 				}
 				document.querySelector('.wp-block-occ-rather-simple-infinite-latest-posts .infinite-posts').insertAdjacentHTML('beforeend', html);
+				
+				// Dispatch custom event after inserting new posts.
+				var event = new Event('rsilp:insertposts');
+    			document.dispatchEvent(event);
+
 				// Get stored sidebar scroll position and move to it.
-				var top = sessionStorage.getItem('sidebar-scroll');
+				/*var top = sessionStorage.getItem('sidebar-scroll');
 				if (top !== null) {
 					sidebar.scrollTop = parseInt(top, 10);
-				}
+				}*/
 				var total = parseInt(elLoadMore.getAttribute('data-total'));
 				if (total <= numposts) {
 					// Show button if there are more posts to load.
@@ -63,10 +68,10 @@
 			req.send();
 		}
 
-		window.addEventListener('beforeunload', () => {
+		/*window.addEventListener('beforeunload', () => {
 			// Store sidebar scroll position in sessionStorage when changing pages.
 			sessionStorage.setItem('sidebar-scroll', sidebar.scrollTop);
-		});
+		});*/
 
 		elLoadMore = document.querySelector('.wp-block-occ-rather-simple-infinite-latest-posts .load-more');
 		if (elLoadMore) {
