@@ -21,7 +21,7 @@
 
 	document.addEventListener('DOMContentLoaded', function () {
 
-		var sidebar = document.querySelector('.sidebar');
+		//var sidebar = document.querySelector('.sidebar');
 
 		var elLoadMore = document.querySelector('.wp-block-occ-rather-simple-infinite-latest-posts .load-more');
 		if (elLoadMore) {
