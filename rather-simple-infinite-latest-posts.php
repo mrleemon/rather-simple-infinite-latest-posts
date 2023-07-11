@@ -293,8 +293,6 @@ class Rather_Simple_Infinite_Latest_Posts {
 	 * @param string $content  The content.
 	 */
 	public function render_block( $attr, $content ) {
-		$html = '';
-
 		$category = $attr['category'];
 		$number   = $attr['number'];
 
