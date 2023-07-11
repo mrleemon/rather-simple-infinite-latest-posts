@@ -9,7 +9,7 @@
  * Author: Oscar Ciutat
  * Author URI: http://oscarciutat.com/code/
  * Text Domain: rather-simple-infinite-latest-posts
- * Description: A really simple infinite latest posts widget and block.
+ * Description: A really simple infinite latest posts block.
  * License: GPLv2 or later
  *
  * This program is free software; you can redistribute it and/or modify
@@ -63,7 +63,6 @@ class Rather_Simple_Infinite_Latest_Posts {
 		add_action( 'init', array( $this, 'load_language' ) );
 		add_action( 'init', array( $this, 'register_block' ) );
 		add_action( 'rest_api_init', array( $this, 'rest_api_init' ) );
-		//add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_assets' ) );
 
 	}
@@ -76,46 +75,13 @@ class Rather_Simple_Infinite_Latest_Posts {
 	/**
 	 * Includes required core files used in admin and on the frontend.
 	 */
-	protected function includes() {
-		require_once 'include/class-rather-simple-infinite-latest-posts-widget.php';
-	}
+	protected function includes() {}
 
 	/**
 	 * Loads language
 	 */
 	public function load_language() {
 		load_plugin_textdomain( 'rather-simple-infinite-latest-posts', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-	}
-
-	/**
-	 * Enqueue scripts and styles
-	 */
-	public function enqueue_scripts() {
-		// Load styles.
-		wp_enqueue_style(
-			'rsilp-style',
-			plugins_url( 'style.css', __FILE__ ),
-			array(),
-			filemtime( plugin_dir_path( __FILE__ ) . '/style.css' )
-		);
-
-		// Load scripts.
-		wp_enqueue_script(
-			'rsilp-script',
-			plugins_url( '/assets/js/frontend.js', __FILE__ ),
-			array(),
-			filemtime( plugin_dir_path( __FILE__ ) . '/assets/js/frontend.js' ),
-			true
-		);
-
-		wp_localize_script(
-			'rsilp-script',
-			'rsilp_params_rest',
-			array(
-				'rest_url'   => rest_url(),
-				'rest_nonce' => wp_create_nonce( 'wp_rest' ),
-			)
-		);
 	}
 
 	/**
@@ -132,7 +98,6 @@ class Rather_Simple_Infinite_Latest_Posts {
 			)
 		);
 	}
-
 
 	/**
 	 * Register REST route

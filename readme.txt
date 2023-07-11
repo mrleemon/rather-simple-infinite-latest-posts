@@ -1,17 +1,17 @@
 === Rather Simple Infinite Latest Posts ===
 Contributors: leemon
-Tags: posts, widget
+Tags: posts, block
 Requires at least: 6.1
 Tested up to: 6.1
 Stable tag: 1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-A really simple infinite latest posts widget and block.
+A really simple infinite latest posts block.
 
 == Description ==
 
-A really simple infinite latest posts widget and block.
+A really simple infinite latest posts block.
 
 This plugin is experimental and is provided with no support or warranty. 
 
