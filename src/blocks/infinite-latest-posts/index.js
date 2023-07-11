@@ -9,6 +9,7 @@ import {
 	Path,
 	SVG,
 	PanelBody,
+	Spinner,
 	SelectControl,
 	RangeControl
 } from '@wordpress/components';
@@ -18,7 +19,6 @@ import {
 } from '@wordpress/block-editor';
 import { useSelect } from '@wordpress/data';
 import { decodeEntities } from '@wordpress/html-entities';
-import ServerSideRender from '@wordpress/server-side-render';
 import metadata from "./block.json";
 
 import './editor.scss';
@@ -64,10 +64,10 @@ export const settings = {
 		};
 
 		if (!categories) {
-			return __('Loading...', 'rather-simple-infinite-latest-posts');
+			return <Spinner />;
 		}
 
-		if (categories.length === 0) {
+		if (categories?.length === 0) {
 			return __('No categories found', 'rather-simple-infinite-latest-posts');
 		}
 
@@ -85,10 +85,10 @@ export const settings = {
 		}
 
 		if (!posts) {
-			return __('Loading...', 'rather-simple-infinite-latest-posts');
+			return <Spinner />;
 		}
 
-		if (posts.length === 0) {
+		if (posts?.length === 0) {
 			return __('No posts found', 'rather-simple-infinite-latest-posts');
 		}
 
@@ -98,11 +98,11 @@ export const settings = {
 					return (
 						<article id={`post-${post.id}`} className="wp-block-occ-rather-simple-infinite-latest-posts__post" key={index}>
 							<h2 className="wp-block-occ-rather-simple-infinite-latest-posts__post-title">
-                            {
-								post.title.rendered ?
-									decodeEntities(post.title.rendered) :
-									__('(no title)', 'rather-simple-infinite-latest-posts')
-							}
+								{
+									post.title.rendered ?
+										decodeEntities(post.title.rendered) :
+										__('(no title)', 'rather-simple-infinite-latest-posts')
+								}
 							</h2>
 							<div className="wp-block-occ-rather-simple-infinite-latest-posts__post-content" dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
 						</article>
@@ -141,16 +141,6 @@ export const settings = {
 
 	}),
 
-	save: () => {
-		return null;
-	},
-
-	/*
-<ServerSideRender
-	block="occ/rather-simple-infinite-latest-posts"
-	attributes={ attributes }
-	className={ className }
-/>*/
 };
 
 registerBlockType(name, settings);
