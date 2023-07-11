@@ -2,7 +2,6 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
 import { registerBlockType } from '@wordpress/blocks';
 import {
 	G,
@@ -37,23 +36,29 @@ export const settings = {
 			setAttributes,
 		} = props;
 
-		const categories = useSelect(
-			(select) => select('core').getEntityRecords('taxonomy', 'category', {
+		const { categories, hasCategoriesResolved } = useSelect(select => {
+			const query = {
 				per_page: -1
-			}),
-			[]
-		);
+			};
+			return {
+				categories: select('core').getEntityRecords('taxonomy', 'category', query),
+				hasCategoriesResolved: select('core').hasFinishedResolution('getEntityRecords', ['taxonomy', 'category', query]),
+			}
+		}, []);
 
-		const posts = useSelect(
-			(select) => select('core').getEntityRecords('postType', 'post', {
+		const { posts, hasPostsResolved } = useSelect(select => {
+			const query = {
 				order: 'desc',
 				orderby: 'date',
 				status: 'publish',
 				categories: category ? category : [],
 				per_page: number
-			}),
-			[category, number]
-		);
+			};
+			return {
+				posts: select('core').getEntityRecords('postType', 'post', query),
+				hasPostsResolved: select('core').hasFinishedResolution('getEntityRecords', ['postType', 'post', query]),
+			}
+		}, [category, number]);
 
 		const setCategory = value => {
 			setAttributes({ category: parseInt(value) });
@@ -63,7 +68,7 @@ export const settings = {
 			setAttributes({ number: parseInt(value) });
 		};
 
-		if (!categories) {
+		if (!hasCategoriesResolved) {
 			return <Spinner />;
 		}
 
@@ -82,14 +87,6 @@ export const settings = {
 				label: categories[i].name,
 				value: categories[i].id
 			});
-		}
-
-		if (!posts) {
-			return <Spinner />;
-		}
-
-		if (posts?.length === 0) {
-			return __('No posts found', 'rather-simple-infinite-latest-posts');
 		}
 
 		const displayPosts = (posts) => {
@@ -112,7 +109,7 @@ export const settings = {
 		};
 
 		return (
-			<Fragment>
+			<>
 				<InspectorControls>
 					<PanelBody title={__('Settings', 'rather-simple-infinite-latest-posts')}>
 						<SelectControl
@@ -130,13 +127,23 @@ export const settings = {
 						/>
 					</PanelBody>
 				</InspectorControls>
-				{posts.length &&
-					<div {...blockProps}>
-						{displayPosts(posts)}
-						<input type="button" class="wp-element-button" value={__('Load More', 'rather-simple-infinite-latest-posts')} disabled />
-					</div>
-				}
-			</Fragment>
+				<div {...blockProps}>
+					{!hasPostsResolved &&
+						<Spinner />
+					}
+					{hasPostsResolved && posts?.length === 0 &&
+						<p>
+							{__('No posts found', 'rather-simple-infinite-latest-posts')}
+						</p>
+					}
+					{hasPostsResolved && posts?.length > 0 &&
+						<>
+							{displayPosts(posts)}
+							<input type="button" className="wp-element-button" value={__('Load More', 'rather-simple-infinite-latest-posts')} disabled />
+						</>
+					}
+				</div>
+			</>
 		);
 
 	}),
