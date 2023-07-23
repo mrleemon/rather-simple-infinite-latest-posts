@@ -5,7 +5,7 @@
   "title": "Rather Simple Infinite Latest Posts",
   "description": "Display latest posts.",
   "textdomain": "rather-simple-infinite-latest-posts",
-  "category": "common",
+  "category": "widgets",
   "attributes": {
     "category": {
       "type": "integer",
