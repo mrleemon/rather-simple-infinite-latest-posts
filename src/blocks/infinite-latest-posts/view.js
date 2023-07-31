@@ -21,8 +21,6 @@
 
 	document.addEventListener('DOMContentLoaded', function () {
 
-		//var sidebar = document.querySelector('.sidebar');
-
 		var elLoadMore = document.querySelector('.wp-block-occ-rather-simple-infinite-latest-posts .load-more');
 		if (elLoadMore) {
 			var req = new XMLHttpRequest();
@@ -43,15 +41,11 @@
 				}
 				document.querySelector('.wp-block-occ-rather-simple-infinite-latest-posts .infinite-posts').insertAdjacentHTML('beforeend', html);
 				
-				// Dispatch custom event after inserting new posts.
+				// Dispatch custom event after inserting new posts
+				// for external scripts to hook into.
 				var event = new Event('rsilp:insertposts');
     			document.dispatchEvent(event);
 
-				// Get stored sidebar scroll position and move to it.
-				/*var top = sessionStorage.getItem('sidebar-scroll');
-				if (top !== null) {
-					sidebar.scrollTop = parseInt(top, 10);
-				}*/
 				var total = parseInt(elLoadMore.getAttribute('data-total'));
 				if (total <= numposts) {
 					// Show button if there are more posts to load.
@@ -67,11 +61,6 @@
 			req.setRequestHeader('X-WP-Nonce', rsilp_params_rest.rest_nonce)
 			req.send();
 		}
-
-		/*window.addEventListener('beforeunload', () => {
-			// Store sidebar scroll position in sessionStorage when changing pages.
-			sessionStorage.setItem('sidebar-scroll', sidebar.scrollTop);
-		});*/
 
 		elLoadMore = document.querySelector('.wp-block-occ-rather-simple-infinite-latest-posts .load-more');
 		if (elLoadMore) {
