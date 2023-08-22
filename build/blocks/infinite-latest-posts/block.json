@@ -1,6 +1,6 @@
 {
   "$schema": "https://schemas.wp.org/trunk/block.json",
-  "apiVersion": 2,
+  "apiVersion": 3,
   "name": "occ/rather-simple-infinite-latest-posts",
   "title": "Rather Simple Infinite Latest Posts",
   "description": "Display latest posts.",
