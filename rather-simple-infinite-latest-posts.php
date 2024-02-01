@@ -50,7 +50,6 @@ class Rather_Simple_Infinite_Latest_Posts {
 		}
 
 		return self::$instance;
-
 	}
 
 	/**
@@ -64,7 +63,6 @@ class Rather_Simple_Infinite_Latest_Posts {
 		add_action( 'init', array( $this, 'register_block' ) );
 		add_action( 'rest_api_init', array( $this, 'rest_api_init' ) );
 		add_action( 'enqueue_block_assets', array( $this, 'enqueue_block_assets' ) );
-
 	}
 
 	/**
@@ -112,22 +110,22 @@ class Rather_Simple_Infinite_Latest_Posts {
 				'permission_callback' => '__return_true',
 				'args'                => array(
 					'category' => array(
-						'validate_callback' => function( $param, $request, $key ) {
+						'validate_callback' => function ( $param ) {
 							return is_numeric( $param );
 						},
 					),
 					'number'   => array(
-						'validate_callback' => function( $param, $request, $key ) {
+						'validate_callback' => function ( $param ) {
 							return is_numeric( $param );
 						},
 					),
 					'offset'   => array(
-						'validate_callback' => function( $param, $request, $key ) {
+						'validate_callback' => function ( $param ) {
 							return is_numeric( $param );
 						},
 					),
 					'total'    => array(
-						'validate_callback' => function( $param, $request, $key ) {
+						'validate_callback' => function ( $param ) {
 							return is_numeric( $param );
 						},
 					),
@@ -254,10 +252,9 @@ class Rather_Simple_Infinite_Latest_Posts {
 	/**
 	 * Render block
 	 *
-	 * @param array  $attr     The block attributes.
-	 * @param string $content  The content.
+	 * @param array $attr     The block attributes.
 	 */
-	public function render_block( $attr, $content ) {
+	public function render_block( $attr ) {
 		$category = $attr['category'];
 		$number   = $attr['number'];
 
@@ -268,7 +265,6 @@ class Rather_Simple_Infinite_Latest_Posts {
 
 		return $html;
 	}
-
 }
 
 add_action( 'plugins_loaded', array( Rather_Simple_Infinite_Latest_Posts::get_instance(), 'plugin_setup' ) );
