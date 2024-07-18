@@ -7,7 +7,7 @@
     "npm-check-updates": "^16.14.20"
   },
   "devDependencies": {
-    "@wordpress/scripts": "^27.9.0"
+    "@wordpress/scripts": "^28.3.0"
   },
   "scripts": {
     "build": "wp-scripts build",
