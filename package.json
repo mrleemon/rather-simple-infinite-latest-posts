@@ -4,13 +4,14 @@
   "license": "GPL-2.0-or-later",
   "main": "build/index.js",
   "dependencies": {
+    "@wordpress/interactivity": "^6.12.0",
     "npm-check-updates": "^17.1.11"
   },
   "devDependencies": {
     "@wordpress/scripts": "^30.5.1"
   },
   "scripts": {
-    "build": "wp-scripts build",
+    "build": "wp-scripts build --experimental-modules",
     "check-engines": "wp-scripts check-engines",
     "check-licenses": "wp-scripts check-licenses",
     "format": "wp-scripts format",
