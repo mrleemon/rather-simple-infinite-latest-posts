@@ -3,7 +3,7 @@ Contributors: leemon
 Tags: posts, block
 Requires at least: 6.6
 Tested up to: 6.6
-Stable tag: 1.0
+Stable tag: 2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,5 +20,8 @@ This plugin is experimental and is provided with no support or warranty.
 2. Activate the plugin through the "Plugins" menu in WordPress
 
 == Changelog ==
+= 2.0 =
+* Refactor frontend code to use the Interactivity API
+
 = 1.0 =
 * Initial release
