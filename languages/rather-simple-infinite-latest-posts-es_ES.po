@@ -2,9 +2,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Rather Simple Infinite Latest Posts\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rather-simple-"
-"infinite-latest-posts\n"
-"POT-Creation-Date: 2024-06-20T07:26:53+00:00\n"
-"PO-Revision-Date: 2024-06-20 09:28+0200\n"
+"infinite-latest-posts-interactive\n"
+"POT-Creation-Date: 2024-11-20T10:45:26+00:00\n"
+"PO-Revision-Date: 2024-11-20 11:45+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es_ES\n"
@@ -40,49 +40,45 @@ msgstr ""
 msgid "http://oscarciutat.com/code/"
 msgstr ""
 
-#: rather-simple-infinite-latest-posts.php:186
-#: rather-simple-infinite-latest-posts.php:187
-msgid "Edit"
-msgstr "Editar"
-
-#: rather-simple-infinite-latest-posts.php:263
+#: build/blocks/infinite-latest-posts/render.php:21
+#: src/blocks/infinite-latest-posts/render.php:21
 #: build/blocks/infinite-latest-posts/index.js:1
-#: src/blocks/infinite-latest-posts/index.js:150
+#: src/blocks/infinite-latest-posts/edit.js:129
 msgid "Load More"
 msgstr "Cargar más"
 
 #: build/blocks/infinite-latest-posts/index.js:1
-#: src/blocks/infinite-latest-posts/index.js:84
+#: src/blocks/infinite-latest-posts/edit.js:63
 msgid "No categories found"
 msgstr "No se ha encontrado ninguna categoría"
 
 #: build/blocks/infinite-latest-posts/index.js:1
-#: src/blocks/infinite-latest-posts/index.js:89
+#: src/blocks/infinite-latest-posts/edit.js:68
 msgid "Select a category..."
 msgstr "Selecciona una categoría..."
 
 #: build/blocks/infinite-latest-posts/index.js:1
-#: src/blocks/infinite-latest-posts/index.js:122
+#: src/blocks/infinite-latest-posts/edit.js:101
 msgid "Settings"
 msgstr "Ajustes"
 
 #: build/blocks/infinite-latest-posts/index.js:1
-#: src/blocks/infinite-latest-posts/index.js:124
+#: src/blocks/infinite-latest-posts/edit.js:103
 msgid "Select a category:"
 msgstr "Selecciona una categoría:"
 
 #: build/blocks/infinite-latest-posts/index.js:1
-#: src/blocks/infinite-latest-posts/index.js:130
+#: src/blocks/infinite-latest-posts/edit.js:109
 msgid "Number of posts to show:"
 msgstr "Número de entradas a mostrar:"
 
 #: build/blocks/infinite-latest-posts/index.js:1
-#: src/blocks/infinite-latest-posts/index.js:144
+#: src/blocks/infinite-latest-posts/edit.js:123
 msgid "No posts found"
 msgstr "No se ha encontrado ninguna entrada"
 
 #: build/blocks/infinite-latest-posts/index.js:1
-#: src/blocks/infinite-latest-posts/index.js:109
+#: src/blocks/infinite-latest-posts/edit.js:88
 msgid "(no title)"
 msgstr "(sin título)"
 
@@ -97,3 +93,9 @@ msgstr ""
 msgctxt "block description"
 msgid "Display latest posts."
 msgstr "Mostrar las últimas entradas."
+
+#~ msgid "Edit"
+#~ msgstr "Editar"
+
+#~ msgid "Load more"
+#~ msgstr "Cargar más"

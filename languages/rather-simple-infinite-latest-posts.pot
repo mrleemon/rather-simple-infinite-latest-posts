@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Rather Simple Infinite Latest Posts 1.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rather-simple-infinite-latest-posts\n"
+"Project-Id-Version: Rather Simple Infinite Latest Posts 2.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/rather-simple-infinite-latest-posts-interactive\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2024-06-20T07:26:53+00:00\n"
+"POT-Creation-Date: 2024-11-20T10:45:26+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.8.1\n"
 "X-Domain: rather-simple-infinite-latest-posts\n"
@@ -30,49 +30,45 @@ msgstr ""
 msgid "http://oscarciutat.com/code/"
 msgstr ""
 
-#: rather-simple-infinite-latest-posts.php:186
-#: rather-simple-infinite-latest-posts.php:187
-msgid "Edit"
-msgstr ""
-
-#: rather-simple-infinite-latest-posts.php:263
+#: build/blocks/infinite-latest-posts/render.php:21
+#: src/blocks/infinite-latest-posts/render.php:21
 #: build/blocks/infinite-latest-posts/index.js:1
-#: src/blocks/infinite-latest-posts/index.js:150
+#: src/blocks/infinite-latest-posts/edit.js:129
 msgid "Load More"
 msgstr ""
 
 #: build/blocks/infinite-latest-posts/index.js:1
-#: src/blocks/infinite-latest-posts/index.js:84
+#: src/blocks/infinite-latest-posts/edit.js:63
 msgid "No categories found"
 msgstr ""
 
 #: build/blocks/infinite-latest-posts/index.js:1
-#: src/blocks/infinite-latest-posts/index.js:89
+#: src/blocks/infinite-latest-posts/edit.js:68
 msgid "Select a category..."
 msgstr ""
 
 #: build/blocks/infinite-latest-posts/index.js:1
-#: src/blocks/infinite-latest-posts/index.js:122
+#: src/blocks/infinite-latest-posts/edit.js:101
 msgid "Settings"
 msgstr ""
 
 #: build/blocks/infinite-latest-posts/index.js:1
-#: src/blocks/infinite-latest-posts/index.js:124
+#: src/blocks/infinite-latest-posts/edit.js:103
 msgid "Select a category:"
 msgstr ""
 
 #: build/blocks/infinite-latest-posts/index.js:1
-#: src/blocks/infinite-latest-posts/index.js:130
+#: src/blocks/infinite-latest-posts/edit.js:109
 msgid "Number of posts to show:"
 msgstr ""
 
 #: build/blocks/infinite-latest-posts/index.js:1
-#: src/blocks/infinite-latest-posts/index.js:144
+#: src/blocks/infinite-latest-posts/edit.js:123
 msgid "No posts found"
 msgstr ""
 
 #: build/blocks/infinite-latest-posts/index.js:1
-#: src/blocks/infinite-latest-posts/index.js:109
+#: src/blocks/infinite-latest-posts/edit.js:88
 msgid "(no title)"
 msgstr ""
 
