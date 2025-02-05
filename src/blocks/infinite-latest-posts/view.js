@@ -12,12 +12,10 @@ store('rsilp-store', {
 					html += '<article id="post-' + post.id + '" class="wp-block-occ-rather-simple-infinite-latest-posts__post">';
 					html += '<h2 class="wp-block-occ-rather-simple-infinite-latest-posts__post-title">' + post.title.rendered + '</h2>';
 					html += '<div class="wp-block-occ-rather-simple-infinite-latest-posts__post-content">' + post.content.rendered + '</div>';
-					/*if ( post.post_edit_link ) {
-						html += '<div class="wp-block-occ-rather-simple-infinite-latest-posts__post-meta"><span class="edit-link">' + post.post_edit_link + '</span></div>';
-					}*/
 					html += '</article>';
 				}
-				element.ref.innerHTML += html;
+				//element.ref.innerHTML += html;
+				element.ref.insertAdjacentHTML('beforeend', html);
 
 				// Dispatch custom event after inserting new posts
 				// for external scripts to hook into.
