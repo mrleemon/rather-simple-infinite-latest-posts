@@ -9,6 +9,7 @@
  * Author: Oscar Ciutat
  * Author URI: http://oscarciutat.com/code/
  * Text Domain: rather-simple-infinite-latest-posts
+ * Domain Path: /languages
  * Description: A really simple infinite latest posts block.
  * License: GPLv2 or later
  *
