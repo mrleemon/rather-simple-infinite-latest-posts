@@ -4,7 +4,7 @@
  * Plugin URI:
  * Update URI: false
  * Version: 2.0
- * Requires at least: 6.6
+ * Requires at least: 6.8
  * Requires PHP: 7.4
  * Author: Oscar Ciutat
  * Author URI: http://oscarciutat.com/code/
@@ -60,7 +60,6 @@ class Rather_Simple_Infinite_Latest_Posts {
 
 		$this->includes();
 
-		add_action( 'init', array( $this, 'load_language' ) );
 		add_action( 'init', array( $this, 'register_block' ) );
 	}
 
@@ -73,13 +72,6 @@ class Rather_Simple_Infinite_Latest_Posts {
 	 * Includes required core files used in admin and on the frontend.
 	 */
 	protected function includes() {}
-
-	/**
-	 * Loads language
-	 */
-	public function load_language() {
-		load_plugin_textdomain( 'rather-simple-infinite-latest-posts', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-	}
 
 	/**
 	 * Registers block
