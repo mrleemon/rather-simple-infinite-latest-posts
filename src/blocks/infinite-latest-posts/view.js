@@ -5,17 +5,33 @@ store('rsilp-store', {
 		renderPosts() {
 			const context = getContext();
 			const element = getElement();
-			if (context.posts !== null) {
-				var html = '';
-				for (var i = 0; i < context.posts.length; i++) {
-					var post = context.posts[i];
-					html += '<article id="post-' + post.id + '" class="wp-block-occ-rather-simple-infinite-latest-posts__post">';
-					html += '<h2 class="wp-block-occ-rather-simple-infinite-latest-posts__post-title">' + post.title.rendered + '</h2>';
-					html += '<div class="wp-block-occ-rather-simple-infinite-latest-posts__post-content">' + post.content.rendered + '</div>';
-					html += '</article>';
-				}
-				//element.ref.innerHTML += html;
-				element.ref.insertAdjacentHTML('beforeend', html);
+
+			if (context?.posts) {
+				// Create fragment.
+				const fragment = document.createDocumentFragment();
+			
+				context.posts.forEach(post => {
+					const article = document.createElement('article');
+					article.id = `post-${post.id}`;
+					article.className = 'wp-block-occ-rather-simple-infinite-latest-posts__post';
+			
+					const title = document.createElement('h2');
+					title.className = 'wp-block-occ-rather-simple-infinite-latest-posts__post-title';
+					title.innerHTML = post.title.rendered;
+			
+					const content = document.createElement('div');
+					content.className = 'wp-block-occ-rather-simple-infinite-latest-posts__post-content';
+					content.innerHTML = post.content.rendered;
+			
+					article.appendChild(title);
+					article.appendChild(content);
+			
+					// Add article to the fragment.
+					fragment.appendChild(article);
+				});
+			
+				// Add fragment to the DOM.
+				element.ref.appendChild(fragment); 
 
 				// Dispatch custom event after inserting new posts
 				// for external scripts to hook into.
