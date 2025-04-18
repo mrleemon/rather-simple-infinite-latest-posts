@@ -2,7 +2,7 @@ import { store, getContext, getElement } from '@wordpress/interactivity';
 
 store('rsilp-store', {
 	callbacks: {
-		renderPosts() {
+		renderPosts: function () {
 			const context = getContext();
 			const element = getElement();
 
@@ -39,14 +39,14 @@ store('rsilp-store', {
 				document.dispatchEvent(event);
 			}
 		},
-		saveState() {
+		saveState: function () {
 			const context = getContext();
 			// Store posts offset in sessionStorage when changing pages.
 			sessionStorage.setItem('posts-offset', context.offset);
 		}
 	},
 	actions: {
-		*getFirstPosts() {
+		getFirstPosts: function* () {
 			const context = getContext()
 			const number = sessionStorage.getItem('posts-offset') || context.number;
 			const posts = yield fetch(
@@ -68,7 +68,7 @@ store('rsilp-store', {
 			context.offset = parseInt(number);
 			context.display = (context.offset < context.total) ? 'block' : 'none';
 		},
-		*getPosts() {
+		getPosts: function* () {
 			const context = getContext();
 			const posts = yield fetch(
 				'https://' + window.location.hostname + '/wp-json/wp/v2/posts?per_page=' + encodeURIComponent(context.number) + '&offset=' + encodeURIComponent(context.offset) + '&categories=' + encodeURIComponent(context.category) + '&_fields=id,title,content',
