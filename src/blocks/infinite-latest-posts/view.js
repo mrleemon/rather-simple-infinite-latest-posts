@@ -52,6 +52,7 @@ store('rsilp-store', {
 			const posts = yield fetch(
 				'https://' + window.location.hostname + '/wp-json/wp/v2/posts?per_page=' + encodeURIComponent(number) + '&offset=0&categories=' + encodeURIComponent(context.category) + '&_fields=id,title,content',
 				{
+					cache: 'force-cache',
 					method: 'GET',
 					headers: {
 						'Cache-Control': 'max-age=60, must-revalidate',
