@@ -27,5 +27,5 @@
 	data-wp-on-window--beforeunload="callbacks.saveState"
 >
 	<div data-wp-watch="callbacks.renderPosts"></div>
-	<button data-wp-style--display="context.display" data-wp-on--click="actions.getPosts"><?php _e( 'Load More', 'rather-simple-infinite-latest-posts' ); ?></button>
+	<button class="wp-element-button" data-wp-style--display="context.display" data-wp-on--click="actions.getPosts"><?php _e( 'Load More', 'rather-simple-infinite-latest-posts' ); ?></button>
 </div>
