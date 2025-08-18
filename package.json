@@ -4,11 +4,11 @@
   "license": "GPL-2.0-or-later",
   "main": "build/index.js",
   "dependencies": {
-    "@wordpress/interactivity": "^6.26.0",
-    "npm-check-updates": "^18.0.1"
+    "@wordpress/interactivity": "^6.28.0",
+    "npm-check-updates": "^18.0.2"
   },
   "devDependencies": {
-    "@wordpress/scripts": "^30.19.0"
+    "@wordpress/scripts": "^30.21.0"
   },
   "scripts": {
     "build": "wp-scripts build --experimental-modules",
