@@ -17,6 +17,7 @@
     }
   },
   "supports": {
+    "anchor": true,
     "html": false,
     "spacing": {
       "margin": true,
