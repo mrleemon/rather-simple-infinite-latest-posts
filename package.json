@@ -4,11 +4,11 @@
   "license": "GPL-2.0-or-later",
   "main": "build/index.js",
   "dependencies": {
-    "@wordpress/interactivity": "^6.37.0",
-    "npm-check-updates": "^19.3.1"
+    "@wordpress/interactivity": "^6.39.0"
   },
   "devDependencies": {
-    "@wordpress/scripts": "^31.2.0"
+    "@wordpress/scripts": "^31.4.0",
+    "dir-archiver": "^2.2.0"
   },
   "scripts": {
     "build": "wp-scripts build --experimental-modules",
@@ -20,11 +20,11 @@
     "lint:md:docs": "wp-scripts lint-md-docs",
     "lint:pkg-json": "wp-scripts lint-pkg-json",
     "packages-update": "wp-scripts packages-update",
-    "plugin-zip": "wp-scripts plugin-zip",
     "start": "wp-scripts start",
     "test:e2e": "wp-scripts test-e2e",
     "test:unit": "wp-scripts test-unit-js",
     "make-pot": "wp i18n make-pot . languages/rather-simple-infinite-latest-posts.pot",
-    "make-json": "wp i18n make-json languages --no-purge"
+    "make-json": "wp i18n make-json languages --no-purge",
+    "bundle": "dir-archiver --includebasedir --src . --dest ../rather-simple-infinite-latest-posts.zip --exclude .git .gitattributes .gitignore node_modules package-lock.json package.json"
   }
 }
